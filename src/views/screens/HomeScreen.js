@@ -101,15 +101,23 @@ const HomeScreen = ({navigation}) => {
           <View>
             <Text style={styles.headerTittle}>Tìm kiếm thêm</Text>
             <Text style={styles.headerTittle}>nhiều khách sạn khác</Text>
-            <View style={styles.inputSearch}>
-              <MaterialIcons name="search" size={28} />
-              <TextInput
-                placeholder="Tìm khách sạn"
-                underlineColorAndroid="transparent"
-                style={styles.textInput}
-                autoCapitalize="none"
-              />
-            </View>
+              <View style={styles.inputSearch} >
+                <MaterialIcons
+                  name="search"
+                  size={28}
+                  onPress={() => navigation.navigate('SearchHotelScreen')}
+                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('SearchHotelScreen')}>
+                  <TextInput
+                    placeholder="Tìm khách sạn..."
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                  />
+                </TouchableOpacity>
+              </View>
           </View>
         </LinearGradient>
         <Text style={styles.sectionTittle}>Nổi bật </Text>

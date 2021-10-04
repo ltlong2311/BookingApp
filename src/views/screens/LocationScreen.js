@@ -70,14 +70,14 @@ const LocationScreen = ({navigation}) => {
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           name="sort"
           size={28}
-          color={COLORS.white}></MaterialIcons>
+          color={COLORS.white}/>
         <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
           Địa điểm
         </Text>
         <MaterialIcons
           name="notifications-none"
           size={28}
-          color={COLORS.white}></MaterialIcons>
+          color={COLORS.white}/>
       </LinearGradient>
       <ScrollView showsVerticalScrollIndicator={false}>
         <LinearGradient
@@ -101,7 +101,7 @@ const LocationScreen = ({navigation}) => {
             </View>
           </View>
         </LinearGradient>
-        <Text style={styles.sectionTittle}>Địa điểm nổi bật </Text>
+        <Text style={styles.sectionTittle}>Địa điểm phổ biến </Text>
         <View style={{flexDirection: 'row', paddingHorizontal: 20}}>
           <View>
             {locations

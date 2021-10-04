@@ -20,6 +20,8 @@ target 'HotelBookingApp' do
 
   pod 'react-native-panorama-view', :path => '../node_modules/@lightbase/react-native-panorama-view'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'HotelBookingAppTests' do
     inherit! :complete
     # Pods for testing

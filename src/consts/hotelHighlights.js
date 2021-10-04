@@ -15,7 +15,7 @@ const hotelHighlights = [
     diaChi: "Duong To, 920000 Phú Quốc, Việt Nam",
     tenMien: "https://i.imgur.com/MZioN93.jpg",
     email: "3,000,000",
-    website: "https://roundme.com/tour/759050/view/2392981/",
+    website: "https://momento360.com/e/u/eac2bebef6d34c768ea01ae89acfac98?utm_campaign=embed&utm_source=other&heading=170.4&pitch=-11.48&field-of-view=100&size=medium",
     rating: "4.9",
     image: [
       "./assets/uploads/57577832615320a2b59657.21511848.jpg",
@@ -45,7 +45,7 @@ const hotelHighlights = [
     diaChi: "Khánh Hòa, Nha Tran",
     tenMien: "https://i.imgur.com/JjHbrfd.jpg",
     email: "2.835.000",
-    website: "https://i.imgur.com/KMto9Wt.jpg",
+    website: "",
     rating: "4.9",
     image: [
       "./assets/uploads/1019741715615324c06f7d48.19156559.jpg",
@@ -75,7 +75,7 @@ const hotelHighlights = [
     diaChi: "An Bang Beach, Cẩm An, Hội An",
     tenMien: "https://i.imgur.com/U4ZkXKe.jpg",
     email: "2.300.000",
-    website: "https://i.imgur.com/QFfwNi6.jpg",
+    website: "https://seekbeak.com/v/5VjYRvE5qob",
     rating: "4.8",
     image: [
       "assets/uploads/17942106526147100b03b3d6.58866319.jpg",
@@ -103,7 +103,7 @@ const hotelHighlights = [
     diaChi: "An Bang Beach, Cẩm An, Hội An",
     tenMien: "https://i.imgur.com/ltOj8rf.jpg",
     email: "2.500.000",
-    website: "https://i.imgur.com/QFfwNi6.jpg",
+    website: "https://seekbeak.com/v/p9z675d2jQk",
     rating: "4.8",
     image: [
       "assets/uploads/17942106526147100b03b3d6.58866319.jpg",

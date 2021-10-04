@@ -3,6 +3,7 @@ const COLORS = {
     dark: '#000',
     darkText: '#424242',
     darkSub: '#727272',
+    darkTile: '#343434',
     black: '#1E1E1E',
     primary: '#04555c',
     secondary: '#e1e8e9',
@@ -17,7 +18,9 @@ const COLORS = {
     blueN: '#4C74A3',
     jellyBean: '#2574a9',
     whiteT: '#f1f1f1',
+    whiteG: '#f4f4f4',
     gray: '#cbcdcb',
+    grayG: '#a7a7a7',
     grey: '#dddedd',
     greyLynch: '#6c7a89',
     greyC: '#6C6C6C',
@@ -36,6 +39,6 @@ const COLORS = {
     orange: '#f5a623',
     orangeRew: '#FFA902',
     transparent: "#ffffff00",
-}
+};
 
 export default COLORS;

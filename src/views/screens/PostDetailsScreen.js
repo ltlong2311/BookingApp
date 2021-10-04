@@ -40,13 +40,6 @@ const PostDetails = ({route, navigation}) => {
 
   const renderHeader = () => {
     return (
-      // <PostHeader
-      //   post={post}
-      //   showInputComment={showInputComment}
-      //   isFavorite={isFavorite}
-      //   changeStatusInput={() => changeStatusInput()}
-      //   changeStatusFavorite={() => changeStatusFavorite()}
-      // />
       <View style={{flex: 1, paddingHorizontal: 20, paddingTop: 10}}>
         <View style={styles.postBlock}>
           <Text style={{color: '#2c3e50', fontSize: 20, fontWeight: 'bold'}}>

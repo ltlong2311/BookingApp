@@ -14,7 +14,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../../consts/colors';
-// import * as SecureStore from 'expo-secure-store';
+import AsyncStore from '@react-native-async-storage/async-storage';
 import userAPI from '../../API/userAPI';
 
 const LoginScreen = ({navigation}) => {
@@ -28,18 +28,18 @@ const LoginScreen = ({navigation}) => {
     setSecureTextEntry(!secureTextEntry);
   };
 
-  // async function save(key, value) {
-  //   await SecureStore.setItemAsync(key, value);
-  // }
+  const saveToken = async (key, value) => {
+    await AsyncStore.setItem(key, value);
+  };
 
-  // async function getValueFor(key) {
-  //   let result = await SecureStore.getItemAsync(key);
-  //   if (result) {
-  //     console.log("🔐 Here's your value 🔐 \n" + result);
-  //   } else {
-  //     console.log('No values stored under that key.');
-  //   }
-  // }
+  const getValue = async key => {
+    let result = await AsyncStore.getItem(key);
+    if (result) {
+      console.log("Here's value: \n" + result);
+    } else {
+      console.log('No values stored under that key.');
+    }
+  };
 
   const login = async () => {
     var formData = new FormData();
@@ -47,13 +47,12 @@ const LoginScreen = ({navigation}) => {
     formData.append('password', data.password);
     try {
       if (data.username !== '' && data.password !== '') {
-        // const res = await userAPI.login(JSON.stringify(data));
         const res = await userAPI.login(formData);
         console.log(res);
         if (res.status === 'success') {
           navigation.navigate('Home');
-          // save('userToken', res.data.token);
-          // getValueFor('userToken');
+          saveToken('userToken', res.data.token);
+          getValue('userToken');
         }
       }
     } catch (error) {
@@ -78,7 +77,7 @@ const LoginScreen = ({navigation}) => {
                 name="arrow-back-ios"
                 size={28}
                 color={COLORS.white}
-                onPress={navigation.goBack}
+                onPress={() => navigation.navigate('StartScreen')}
               />
             </View>
             <Text style={styles.textHeader}>Đăng nhập</Text>

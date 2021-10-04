@@ -25,7 +25,7 @@ const ImageHotelScreen = ({navigation, route}) => {
   const updateCurrentSlideIndex = e => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(contentOffsetX / width);
-    console.log(contentOffsetX, currentIndex);
+    // console.log(contentOffsetX, currentIndex);
     setCurrentSlideIndex(currentIndex);
   };
 
@@ -57,11 +57,13 @@ const ImageHotelScreen = ({navigation, route}) => {
             color={COLORS.secondary}
             onPress={navigation.goBack}
           />
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ImageHotelScreen', hotel)}
-            activeOpacity={0.8}>
-            <MaterialIcons name="360" size={28} color={COLORS.white} />
-          </TouchableOpacity>
+          {hotel.website !== '' && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PanoramaScreen', hotel)}
+              activeOpacity={0.8}>
+              <MaterialIcons name="360" size={28} color={COLORS.white} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <View style={styles.slider}>

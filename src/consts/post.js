@@ -9,7 +9,6 @@ const posts = [
     type: "1",
     createDate: "2021-08-19 21:25:24",
     favorite: 8,
-    comment: 2,
     comments: [
       {
         id: 1,

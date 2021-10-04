@@ -16,7 +16,7 @@ import COLORS from '../../consts/colors';
 import config from '../../../config';
 
 // import {PanoramaView} from '@lightbase/react-native-panorama-view';
-
+import {WebView} from 'react-native-webview';
 const {width, height} = Dimensions.get('screen');
 
 const PanoramaScreen = ({navigation, route}) => {
@@ -25,16 +25,8 @@ const PanoramaScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.background}>
       <View style={{width: width}}>
         <View style={styles.header}>
-          <MaterialIcons
-            name="arrow-back-ios"
-            size={28}
-            color={COLORS.secondary}
-            onPress={navigation.goBack}
-          />
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ImageHotelScreen', hotel)}
-            activeOpacity={0.8}>
-            <MaterialIcons name="360" size={28} color={COLORS.white} />
+          <TouchableOpacity onPress={navigation.goBack} activeOpacity={0.8}>
+            <MaterialIcons name="close" size={28} color={COLORS.white} />
           </TouchableOpacity>
         </View>
       </View>
@@ -45,6 +37,15 @@ const PanoramaScreen = ({navigation, route}) => {
           inputType="mono"
           imageUrl="https://i.imgur.com/rhnRjxr.jpg"
         /> */}
+        <WebView
+          style={{flex: 1}}
+          source={{
+            uri: hotel.website,
+          }}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          startInLoadingState={true}
+        />
       </View>
       <View>
         <Text style={{color: COLORS.secondary, bottom: 10}}>1/1</Text>
@@ -67,12 +68,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   slider: {
     width: width,
-    height: height / 2.5,
+    height: height / 1.8,
     bottom: 50,
+    alignSelf: 'stretch',
   },
 });
 

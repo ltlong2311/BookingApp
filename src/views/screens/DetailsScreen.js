@@ -25,6 +25,16 @@ const toText = html => {
     .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, '');
 };
 
+function convertHTMLEntity(text){
+  const span = document.createElement('span');
+
+  return text
+  .replace(/&[#A-Za-z0-9]+;/gi, (entity,position,text)=> {
+      span.innerHTML = entity;
+      return span.innerText;
+  });
+}
+
 const DetailsScreen = ({navigation, route}) => {
   const hotel = route.params;
   const [dataList, setDataList] = useState(hotel.image.slice(0, 5));

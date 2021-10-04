@@ -20,10 +20,13 @@ import StartScreen from './src/views/screens/StartScreen';
 import DetailsScreen from './src/views/screens/DetailsScreen';
 import LoginScreen from './src/views/screens/LoginScreen';
 import RegisterScreen from './src/views/screens/RegisterScreen';
-import PostDetails from './src/views/screens/PostDetails';
+import PostDetails from './src/views/screens/PostDetailsScreen';
 import ImageHotelScreen from './src/views/screens/ImageHotelScreen';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import PanoramaScreen from './src/views/screens/PanoramaScreen';
+import SearchHotelScreen from './src/views/screens/SearchHotelScreen';
+import SearchLocationScreen from './src/views/screens/SearchLocationScreen';
+import SearchHotelDetailScreen from './src/views/screens/SearchHotelDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +46,9 @@ const App = () => {
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
         <Stack.Screen name="ImageHotelScreen" component={ImageHotelScreen} />
         <Stack.Screen name="PanoramaScreen" component={PanoramaScreen} />
+        <Stack.Screen name="SearchHotelScreen" component={SearchHotelScreen} />
+        <Stack.Screen name="SearchHotelDetailScreen" component={SearchHotelDetailScreen} />
+        <Stack.Screen name="SearchLocationScreen" component={SearchLocationScreen} />
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
