@@ -26,7 +26,6 @@ import DrawerNavigator from './src/navigation/DrawerNavigator';
 import PanoramaScreen from './src/views/screens/PanoramaScreen';
 import SearchHotelScreen from './src/views/screens/SearchHotelScreen';
 import SearchLocationScreen from './src/views/screens/SearchLocationScreen';
-import SearchHotelDetailScreen from './src/views/screens/SearchHotelDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -47,8 +46,6 @@ const App = () => {
         <Stack.Screen name="ImageHotelScreen" component={ImageHotelScreen} />
         <Stack.Screen name="PanoramaScreen" component={PanoramaScreen} />
         <Stack.Screen name="SearchHotelScreen" component={SearchHotelScreen} />
-        <Stack.Screen name="SearchHotelDetailScreen" component={SearchHotelDetailScreen} />
-        <Stack.Screen name="SearchLocationScreen" component={SearchLocationScreen} />
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />

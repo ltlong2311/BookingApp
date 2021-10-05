@@ -4,6 +4,7 @@ const COLORS = {
     darkText: '#424242',
     darkSub: '#727272',
     darkTile: '#343434',
+    darkMinus: '#6b6b6b',
     black: '#1E1E1E',
     primary: '#04555c',
     secondary: '#e1e8e9',
@@ -16,6 +17,7 @@ const COLORS = {
     sanMarino: '#446cb3',
     jacksonsPurple: '#1f3a93',
     blueN: '#4C74A3',
+    blueTile: '#42628F',
     jellyBean: '#2574a9',
     whiteT: '#f1f1f1',
     whiteG: '#f4f4f4',
@@ -26,6 +28,7 @@ const COLORS = {
     greyC: '#6C6C6C',
     greyHoki: '#67809f',
     greenTee: '#38D45B',
+    yellowT: '#eaff00',
     red: '#f03434',
     redM: '#966565',
     redTorn: '#FE2727',
@@ -38,6 +41,7 @@ const COLORS = {
     scarlet: '#f22613',
     orange: '#f5a623',
     orangeRew: '#FFA902',
+    orangeGon: '#ff8800',
     transparent: "#ffffff00",
 };
 

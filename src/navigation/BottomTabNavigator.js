@@ -9,6 +9,7 @@ import {
 
 import LoginScreen from '../views/screens/LoginScreen';
 import ActiveScreen from '../views/screens/ActiveScreen';
+import UserProfileScreen from '../views/screens/UserProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -51,7 +52,7 @@ const BottomTabNavigator = () => {
         <Tab.Screen name="Location" component={LocationStackNavigator} />
         <Tab.Screen name="Forum" component={ForumStackNavigator} />
         <Tab.Screen name="Active" component={ActiveScreen} />
-        <Tab.Screen name="User" component={LoginScreen} />
+        <Tab.Screen name="User" component={UserProfileScreen} />
       </Tab.Navigator>
     </>
   );

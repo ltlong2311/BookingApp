@@ -7,15 +7,20 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import config from '../../../config';
 import COLORS from '../../consts/colors';
+import FastImage from 'react-native-fast-image';
+
+const {width} = Dimensions.get('screen');
+
 const LocationCard = ({navigation, location, aspectRatio}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => navigation.navigate('LocationDetails', location)}>
-      <ImageBackground
+      <FastImage
         style={[styles.cardImage, {height: aspectRatio}]}
-        source={location.image}>
+        source={{uri: config.IMAGE_URL + location.image}}>
         <View style={styles.overlay}>
           <View
             style={{
@@ -32,15 +37,15 @@ const LocationCard = ({navigation, location, aspectRatio}) => {
                   fontWeight: 'bold',
                   marginBottom: 5,
                 }}>
-                {location.name}
+                {location.tenDD}
               </Text>
               <Text style={{color: COLORS.white}}>
-                {location.choice} lựa chọn
+                {location.total} lựa chọn
               </Text>
             </View>
           </View>
         </View>
-      </ImageBackground>
+      </FastImage>
     </TouchableOpacity>
   );
 };
@@ -52,6 +57,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: 'rgba(0, 0, 0, .1)',
+  },
+  cardImage: {
+    width: (width - 60) / 2,
+    height: 100,
+    marginRight: 20,
+    marginBottom: 20,
+    overflow: 'hidden',
+    borderRadius: 10,
   },
   imageOverlay: {
     flex: 1,

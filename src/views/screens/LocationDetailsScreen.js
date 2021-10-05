@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  ImageBackground,
   SafeAreaView,
   StyleSheet,
   View,
   Text,
+  ActivityIndicator,
   Animated,
   StatusBar,
   FlatList,
@@ -15,13 +15,32 @@ import COLORS from '../../consts/colors';
 import hotelsByLocation from '../../consts/hotelsByLocation';
 import HotelByLocationCard from '../../components/Hotel/HotelByLocationCard';
 import FastImage from 'react-native-fast-image';
+import hotelAPI from '../../API/hotelAPI';
+
 const LocationDetailsScreen = ({navigation, route}) => {
   const location = route.params;
-  const [colorStatusBar, setColorStatusBar] = React.useState('transparent');
+  const hotelLocation = location.tenDD;
+  const [colorStatusBar, setColorStatusBar] = useState('transparent');
+  const [hotelsInLocation, setHotelsInLocation] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setIsLoading(true);
+        const res = await hotelAPI.getByLocation(location.MaDD);
+        setHotelsInLocation(res.data.items);
+        setIsLoading(false);
+      } catch (error) {
+        console.log('Error API Location', error);
+      }
+    };
+    getData();
+  }, []);
 
   const isChangeColorStatusBar = e => {
     const contentOffsetY = e.nativeEvent.contentOffset.y;
-    console.log(contentOffsetY);
+    // console.log(contentOffsetY);
     if (contentOffsetY > 55) {
       setColorStatusBar(COLORS.blueChambray);
     } else {
@@ -29,10 +48,12 @@ const LocationDetailsScreen = ({navigation, route}) => {
     }
   };
 
+  console.log(hotelsInLocation);
+
   const getHeader = () => {
     return (
       <>
-        <FastImage style={{height: 180}} source={{uri: location.url}}>
+        <FastImage style={{height: 180}} source={{uri: location.content}}>
           <View style={styles.overlay}>
             <View style={styles.header}>
               <MaterialIcons
@@ -54,7 +75,7 @@ const LocationDetailsScreen = ({navigation, route}) => {
                     color: COLORS.white,
                   },
                 ]}>
-                {location.name}
+                {location.tenDD}
               </Text>
             </View>
           </View>
@@ -68,7 +89,7 @@ const LocationDetailsScreen = ({navigation, route}) => {
               fontWeight: 'bold',
               color: COLORS.dark,
             }}>
-            {hotelsByLocation.length} lựa chọn
+            {location.total} lựa chọn
           </Text>
         </View>
       </>
@@ -82,20 +103,36 @@ const LocationDetailsScreen = ({navigation, route}) => {
         backgroundColor={colorStatusBar}
         animated={true}
       />
-      <View style={styles.locationList}>
-        <FlatList
-          contentContainerStyle={{}}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={getHeader}
-          maxToRenderPerBatch={2}
-          data={hotelsByLocation}
-          keyExtractor={() => Math.random().toString(36).substr(2, 9)}
-          onScroll={isChangeColorStatusBar}
-          renderItem={({item}) => (
-            <HotelByLocationCard hotel={item} navigation={navigation} />
-          )}
-        />
-      </View>
+      {hotelsInLocation && hotelsInLocation.length !== 0 ? (
+        <View style={styles.locationList}>
+          <FlatList
+            contentContainerStyle={{}}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={getHeader}
+            maxToRenderPerBatch={2}
+            data={hotelsInLocation}
+            keyExtractor={() => Math.random().toString(36).substr(2, 9)}
+            onScroll={isChangeColorStatusBar}
+            renderItem={({item}) => (
+              <HotelByLocationCard
+                hotel={item}
+                location={hotelLocation}
+                navigation={navigation}
+              />
+            )}
+          />
+        </View>
+      ) : (
+        <>
+          {getHeader()}
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            <Text style={{color: COLORS.greyLynch, fontSize: 14}}>
+              Địa điểm chưa có khách sạn
+            </Text>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };

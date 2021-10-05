@@ -75,7 +75,7 @@ const hotelHighlights = [
     diaChi: "An Bang Beach, Cẩm An, Hội An",
     tenMien: "https://i.imgur.com/U4ZkXKe.jpg",
     email: "2.300.000",
-    website: "https://seekbeak.com/v/5VjYRvE5qob",
+    website: "https://momento360.com/e/u/a3bd014593014b8dabe3210eb26445ad?utm_campaign=embed&utm_source=other&heading=467.35&pitch=8.42&field-of-view=90&size=medium",
     rating: "4.8",
     image: [
       "assets/uploads/17942106526147100b03b3d6.58866319.jpg",

@@ -4,9 +4,14 @@ const headers = {
   'Content-Type': 'application/json',
 };
 class HotelAPI {
-  getAll = params => {
-    const url = '/hotels';
-    return axiosClient.get(url, {params});
+  getAll = () => {
+    const url = `/hotels`;
+    return axiosClient.get(url);
+  };
+  getByLocation = (locationID) => {
+    const url = `/search-hotels/${locationID}`;
+    console.log(url);
+    return axiosClient.get(url);
   };
   search = data => {
     const url = '/search-hotels';

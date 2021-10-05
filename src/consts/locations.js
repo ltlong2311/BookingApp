@@ -31,14 +31,14 @@ const locations = [
     id: "5",
     name: "Phú Quốc",
     image: require("../assets/location/vietnam-tour-1.jpg"),
-    url: "https://i.imgur.com/o8AaYrz.jpg",
+    url: "https://i.imgur.com/eKnbQaO.jpg",
     choice: "410",
   },
   {
     id: "6",
     name: "Hà Nội",
     image: require("../assets/location/hanoi4.jpg"),
-    url: "https://i.imgur.com/PeiRC72.jpg",
+    url: "https://i.imgur.com/6QX29Lc.jpg",
     choice: "300",
   },
   {

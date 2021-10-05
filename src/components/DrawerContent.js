@@ -42,7 +42,7 @@ export const DrawerContent = props => {
 
   const logOut = () => {
     deleteToken('userToken');
-    props.navigation.navigate('Login');
+    props.navigation.push('Login');
   };
 
   const getValue = async () => {
@@ -95,7 +95,7 @@ export const DrawerContent = props => {
                 <View style={{flexDirection: 'column', marginLeft: 15}}>
                   <Text style={styles.tittle}>Welcome to KMAHotel!</Text>
                   <Text
-                    onPress={() => props.navigation.navigate('Login')}
+                    onPress={() => props.navigation.push('Login')}
                     style={styles.caption}>
                     Đăng nhập ngay
                   </Text>

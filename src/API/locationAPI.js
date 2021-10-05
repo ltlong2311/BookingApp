@@ -8,6 +8,10 @@ class LocationAPI {
     const url = "/locations";
     return axiosClient.get(url, { params });
   };
+  search = (data) => {
+    const url = '/search-locations';
+    return axiosClient.post(url, data);
+  };
 }
 const locationAPI = new LocationAPI();
 export default locationAPI;

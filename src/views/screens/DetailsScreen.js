@@ -25,19 +25,18 @@ const toText = html => {
     .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, '');
 };
 
-function convertHTMLEntity(text){
+function convertHTMLEntity(text) {
   const span = document.createElement('span');
 
-  return text
-  .replace(/&[#A-Za-z0-9]+;/gi, (entity,position,text)=> {
-      span.innerHTML = entity;
-      return span.innerText;
+  return text.replace(/&[#A-Za-z0-9]+;/gi, (entity, position, text) => {
+    span.innerHTML = entity;
+    return span.innerText;
   });
 }
 
 const DetailsScreen = ({navigation, route}) => {
   const hotel = route.params;
-  const [dataList, setDataList] = useState(hotel.image.slice(0, 5));
+  const [dataList, setDataList] = useState(hotel.image.slice(0, 4));
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
   const ref = useRef(null);
@@ -63,24 +62,9 @@ const DetailsScreen = ({navigation, route}) => {
     }, 5000);
   };
 
-  // const onchange = nativeEvent => {
-  //   if (nativeEvent) {
-  //     const slide = Math.ceil(
-  //       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width,
-  //     );
-  //     if (slide !== imgActive) {
-  //       setImgActive(slide);
-  //     }
-  //   }
-  // };
-
-  // const getFooter = () => {
-  //   return <Text></Text>;
-  // };
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <StatusBar style="light" />
+      <StatusBar style="light" translucent backgroundColor="transparent"/>
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
@@ -98,7 +82,7 @@ const DetailsScreen = ({navigation, route}) => {
               snapToAlignment="center"
               scrollEventThrottle={16}
               decelerationRate={'fast'}
-              data={hotel.image.slice(0, 5)}
+              data={hotel.image.slice(0, 4)}
               keyExtractor={() => Math.random().toString(36).substr(2, 9)}
               renderItem={({item}) => (
                 <ImageBackground
@@ -152,7 +136,7 @@ const DetailsScreen = ({navigation, route}) => {
             </View>
           </View>
           <View style={styles.wrapDot}>
-            {hotel.image.slice(0, 5).map((_, i) => {
+            {hotel.image.slice(0, 4).map((_, i) => {
               let opacity = position.interpolate({
                 inputRange: [i - 1, i, i + 1],
                 outputRange: [0.3, 1, 0.3],
@@ -176,7 +160,7 @@ const DetailsScreen = ({navigation, route}) => {
         </View>
         <View style={styles.detailsHotel}>
           <View style={styles.iconSave}>
-            <MaterialIcons name="bookmarks" color={COLORS.primary} size={30} />
+            <MaterialIcons name="bookmarks" color={COLORS.blueTile} size={30} />
           </View>
           <View
             style={{
@@ -295,7 +279,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 70,
+    height: 60,
     paddingHorizontal: 20,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,

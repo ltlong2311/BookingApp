@@ -68,10 +68,6 @@ const HotelByLocationCard = ({hotel, navigation}) => {
               ]}>
               {hotel.tenKS}
             </Text>
-            <Text
-              style={[{color: COLORS.monza, fontWeight: 'bold', fontSize: 15}]}>
-              {hotel.email} VND
-            </Text>
           </View>
           <View
             style={{
@@ -80,11 +76,14 @@ const HotelByLocationCard = ({hotel, navigation}) => {
               justifyContent: 'space-between',
               paddingTop: 5,
             }}>
-            <Text style={[{color: COLORS.greyLynch, fontSize: 12}]}>
-              {hotel.diaDiem.tenDD}
+            <Text style={[{color: COLORS.greyLynch, fontSize: 12, width: '60%'}]}>
+              {hotel.diaChi}
             </Text>
             <Text style={[{color: COLORS.blueChambray, fontSize: 12}]}>
-              {hotel.website} nhận xét
+            <Text
+              style={[{color: COLORS.monza, fontWeight: 'bold', fontSize: 15}]}>
+              {hotel.email} VND / đêm
+            </Text>
             </Text>
           </View>
         </View>

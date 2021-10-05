@@ -5,6 +5,7 @@ import LocationScreen from '../views/screens/LocationScreen';
 import LocationDetailsScreen from '../views/screens/LocationDetailsScreen';
 import ForumScreen from '../views/screens/ForumScreen';
 import {StatusBar} from 'react-native';
+import SearchLocationScreen from '../views/screens/SearchLocationScreen';
 const Stack = createStackNavigator();
 const screenOptionStyle = {
   headerShown: false,
@@ -21,6 +22,7 @@ const LocationStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="LocationScreen" component={LocationScreen} />
       <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} />
+      <Stack.Screen name="SearchLocationScreen" component={SearchLocationScreen} />
     </Stack.Navigator>
   );
 };

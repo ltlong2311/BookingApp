@@ -5,8 +5,10 @@ import {
   View,
   Text,
   ImageBackground,
+  Dimensions,
   TextInput,
   StatusBar,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -17,12 +19,15 @@ import COLORS from '../../consts/colors';
 import AsyncStore from '@react-native-async-storage/async-storage';
 import userAPI from '../../API/userAPI';
 
+const {width, height} = Dimensions.get('screen');
+
 const LoginScreen = ({navigation}) => {
   const [data, setData] = React.useState({
     username: '',
     password: '',
   });
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const updateSecureTextEntry = () => {
     setSecureTextEntry(!secureTextEntry);
@@ -42,6 +47,7 @@ const LoginScreen = ({navigation}) => {
   };
 
   const login = async () => {
+    setIsLoading(true);
     var formData = new FormData();
     formData.append('username', data.username);
     formData.append('password', data.password);
@@ -50,9 +56,10 @@ const LoginScreen = ({navigation}) => {
         const res = await userAPI.login(formData);
         console.log(res);
         if (res.status === 'success') {
-          navigation.navigate('Home');
           saveToken('userToken', res.data.token);
           getValue('userToken');
+          setIsLoading(false);
+          navigation.push('Home');
         }
       }
     } catch (error) {
@@ -67,7 +74,6 @@ const LoginScreen = ({navigation}) => {
         <ImageBackground
           style={{
             flex: 2,
-            // height: Dimensions.get("window").height / 1.9,
             marginBottom: -30,
           }}
           source={require('../../assets/hotel33.jpg')}>
@@ -85,7 +91,12 @@ const LoginScreen = ({navigation}) => {
         </ImageBackground>
         <View style={styles.footer}>
           <View style={styles.action}>
-            <FontAwesome name="user" color={COLORS.primary} size={20} />
+            <FontAwesome
+              style={{paddingBottom: 5}}
+              name="user"
+              color={COLORS.primary}
+              size={20}
+            />
             <TextInput
               onChangeText={text => setData({...data, username: text})}
               placeholder="Tài khoản"
@@ -94,7 +105,12 @@ const LoginScreen = ({navigation}) => {
             />
           </View>
           <View style={styles.action}>
-            <FontAwesome name="lock" color={COLORS.primary} size={20} />
+            <FontAwesome
+              style={{paddingBottom: 5}}
+              name="lock"
+              color={COLORS.primary}
+              size={20}
+            />
             <TextInput
               onChangeText={text => setData({...data, password: text})}
               placeholder="Mật khẩu"
@@ -140,6 +156,11 @@ const LoginScreen = ({navigation}) => {
             </Text>
           </View>
         </View>
+        {isLoading && (
+          <View style={styles.backgroundNotify}>
+            <ActivityIndicator size="large" color={COLORS.whiteG} />
+          </View>
+        )}
       </SafeAreaView>
     </>
   );
@@ -176,7 +197,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, .1)',
+    backgroundColor: 'rgba(0, 0, 0, .13)',
   },
   textFooter: {
     color: '#05375a',
@@ -189,8 +210,7 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
+    alignItems: 'flex-end',
     marginBottom: 30,
     borderBottomWidth: 1,
     borderBottomColor: '#BFBBBB',
@@ -199,6 +219,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     paddingLeft: 5,
+    paddingBottom: 0,
     color: '#05375a',
     fontSize: 18,
   },
@@ -218,5 +239,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  backgroundNotify: {
+    position: 'absolute',
+    top: 0,
+    width: width,
+    height: height,
+    backgroundColor: 'rgba(0, 0, 0, .3)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

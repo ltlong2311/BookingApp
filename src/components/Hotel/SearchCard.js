@@ -37,11 +37,28 @@ const SearchCard = ({hotel, navigation}) => {
           <Text
             style={{
               color: COLORS.darkText,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: 'bold',
             }}>
             {hotel.tenKS}
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingTop: 10,
+              paddingRight: 10,
+              marginRight: 0,
+            }}>
+            <MaterialIcons
+              name="place"
+              style={{paddingLeft: -5}}
+              size={15}
+              color={COLORS.darkSub}
+            />
+            <Text style={{marginLeft: 5, fontSize: 13, color: COLORS.darkSub}}>
+              {hotel.diaChi}
+            </Text>
+          </View>
           <View
             style={{
               flex: 1,
@@ -50,14 +67,27 @@ const SearchCard = ({hotel, navigation}) => {
               alignItems: 'flex-end',
             }}>
             <View style={{flexDirection: 'row'}}>
-              <MaterialIcons name="place" size={20} color={COLORS.darkText} />
-              <Text style={{marginLeft: 5, color: COLORS.darkText}}>
-                {hotel.email}
+              <Text style={{color: COLORS.jacksonsPurple, fontSize: 13}}>
+                Giá:
+              </Text>
+              <Text
+                style={{
+                  marginLeft: 5,
+                  color: COLORS.redTorn,
+                  fontSize: 13,
+                  fontWeight: 'bold',
+                }}>
+                {hotel.email}đ/ đêm
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <MaterialIcons name="star" size={20} color={COLORS.darkText} />
-              <Text style={{marginLeft: 5, color: COLORS.darkText}}>
+              <MaterialIcons name="star" size={20} color={COLORS.orange} />
+              <Text
+                style={{
+                  marginLeft: 5,
+                  fontWeight: 'bold',
+                  color: COLORS.orangeGon,
+                }}>
                 {hotel.rating}
               </Text>
             </View>
@@ -80,6 +110,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: 10,
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
   },

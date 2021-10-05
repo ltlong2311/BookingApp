@@ -48,11 +48,12 @@ const SearchHotelScreen = ({navigation}) => {
         setDataSearch([]);
       }
     } else {
+      setSearchQuery(query);
       setIsCompleteSearch(false);
     }
   };
 
-  const onAutoCompleteSearch = (valueSearch, dataSearch) => {
+  const autoCompleteSearch = (valueSearch, dataSearch) => {
     setIsCompleteSearch(true);
     setSearchQuery(valueSearch);
     let arrayData = [];
@@ -61,7 +62,7 @@ const SearchHotelScreen = ({navigation}) => {
     Keyboard.dismiss();
   };
 
-  const onSearch = () => {
+  const onSearchSubmit = () => {
     setIsCompleteSearch(true);
     setDataSearchComplete(dataSearch);
     Keyboard.dismiss();
@@ -72,10 +73,7 @@ const SearchHotelScreen = ({navigation}) => {
     setSearchQuery('');
     setDataSearch([]);
     setDataSearchComplete([]);
-    console.log('Đã touch cancel');
   };
-
-  console.log(searchQuery);
 
   const showClearIcon = () => {
     return (
@@ -100,7 +98,6 @@ const SearchHotelScreen = ({navigation}) => {
     );
   };
 
-  console.log(searchQuery);
   return (
     <SafeAreaView style={{flex: 1}}>
       <LinearGradient
@@ -114,7 +111,7 @@ const SearchHotelScreen = ({navigation}) => {
           placeholder="Tên khách sạn"
           onChangeText={onChangeSearch}
           returnKeyType="search"
-          onSubmitEditing={onSearch}
+          onSubmitEditing={onSearchSubmit}
           clearIcon={showClearIcon}
           value={searchQuery}
         />
@@ -132,7 +129,7 @@ const SearchHotelScreen = ({navigation}) => {
               //   navigation.navigate('SearchHotelDetailScreen', dataHotel)
               // }
               onPress={() => {
-                onAutoCompleteSearch(dataHotel.tenKS, dataHotel);
+                autoCompleteSearch(dataHotel.tenKS, dataHotel);
               }}
               key={index}
               style={{paddingBottom: 20}}>

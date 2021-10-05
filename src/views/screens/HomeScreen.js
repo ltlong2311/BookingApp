@@ -101,23 +101,25 @@ const HomeScreen = ({navigation}) => {
           <View>
             <Text style={styles.headerTittle}>Tìm kiếm thêm</Text>
             <Text style={styles.headerTittle}>nhiều khách sạn khác</Text>
-              <View style={styles.inputSearch} >
-                <MaterialIcons
-                  name="search"
-                  size={28}
-                  onPress={() => navigation.navigate('SearchHotelScreen')}
+            <View style={styles.inputSearch}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => navigation.navigate('SearchHotelScreen')}
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <MaterialIcons name="search" size={28} />
+                <TextInput
+                  placeholder="Tìm khách sạn..."
+                  underlineColorAndroid="transparent"
+                  editable={false}
+                  style={styles.textInput}
+                  autoCapitalize="none"
                 />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('SearchHotelScreen')}>
-                  <TextInput
-                    placeholder="Tìm khách sạn..."
-                    underlineColorAndroid="transparent"
-                    editable={false}
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                  />
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </LinearGradient>
         <Text style={styles.sectionTittle}>Nổi bật </Text>
@@ -174,9 +176,9 @@ const HomeScreen = ({navigation}) => {
           <FlatList
             contentContainerStyle={{paddingLeft: 20}}
             showsHorizontalScrollIndicator={false}
-            maxToRenderPerBatch={3}
+            maxToRenderPerBatch={2}
             horizontal
-            data={dataHotel}
+            data={dataHotel.slice(0, 5)}
             keyExtractor={() => Math.random().toString(36).substr(2, 9)}
             renderItem={({item}) => (
               <Card hotel={item} navigation={navigation} />

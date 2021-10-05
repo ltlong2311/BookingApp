@@ -7,11 +7,15 @@ import {
   Dimensions,
   ImageBackground,
   TextInput,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../../consts/colors';
+import userAPI from '../../API/userAPI';
+
+const {width, height} = Dimensions.get('screen');
 
 const RegisterScreen = ({navigation}) => {
   const [data, setData] = React.useState({
@@ -20,6 +24,8 @@ const RegisterScreen = ({navigation}) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const updateSecureTextEntry = () => {
     setData({
@@ -33,7 +39,6 @@ const RegisterScreen = ({navigation}) => {
         <ImageBackground
           style={{
             flex: 1.5,
-            // height: Dimensions.get("window").height / 2,
             marginBottom: -30,
           }}
           source={require('../../assets/hotel15.jpg')}>
@@ -60,6 +65,13 @@ const RegisterScreen = ({navigation}) => {
           <View style={styles.action}>
             <TextInput
               placeholder="Họ tên"
+              style={styles.textInput}
+              autoCapitalize="none"
+            />
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              placeholder="Email"
               style={styles.textInput}
               autoCapitalize="none"
             />
@@ -95,15 +107,23 @@ const RegisterScreen = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
+        {isLoading && (
+          <View style={styles.backgroundNotify}>
+            <ActivityIndicator size="large" color={COLORS.whiteG} />
+            <View style={styles.loadingPopup}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <ActivityIndicator size="large" color={COLORS.airForceBlue} />
+                <Text style={{paddingLeft: 20}}>Đăng ký tài khoản</Text>
+              </View>
+            </View>
+          </View>
+        )}
       </SafeAreaView>
     </>
   );
 };
 
 export default RegisterScreen;
-
-const {height} = Dimensions.get('screen');
-const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({
   container: {
@@ -147,11 +167,10 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 10,
+
     marginBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#BFBBBB',
-    paddingBottom: 5,
   },
   textInput: {
     flex: 1,
@@ -159,6 +178,7 @@ const styles = StyleSheet.create({
     color: '#05375a',
     fontSize: 18,
     marginTop: -3,
+    paddingBottom: 0,
   },
   button: {
     alignItems: 'center',
@@ -176,5 +196,22 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  backgroundNotify: {
+    position: 'absolute',
+    top: 0,
+    width: width,
+    height: height,
+    backgroundColor: 'rgba(0, 0, 0, .3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingPopup: {
+    width: 200,
+    height: 100,
+    backgroundColor: COLORS.white,
+    elevation: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

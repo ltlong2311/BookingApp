@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   View,
@@ -10,54 +10,37 @@ import {
   TextInput,
   ImageBackground,
   FlatList,
-  Dimensions,
+  ActivityIndicator,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import {DrawerActions} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import locations from '../../consts/locations';
-import FastImage from 'react-native-fast-image';
+import locationAPI from '../../API/locationAPI';
+import LocationCard from '../../components/Location/LocationCard';
+
 const {width} = Dimensions.get('screen');
 
 const LocationScreen = ({navigation}) => {
-  const LocationCard = ({location, aspectRatio}) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('LocationDetails', location)}>
-        <FastImage
-          style={[styles.cardImage, {height: aspectRatio}]}
-          source={location.image}>
-          <View style={styles.overlay}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-                alignItems: 'flex-end',
-              }}>
-              <View style={{flexDirection: 'column'}}>
-                <Text
-                  style={{
-                    color: COLORS.white,
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                    marginBottom: 5,
-                  }}>
-                  {location.name}
-                </Text>
-                <Text style={{color: COLORS.white}}>
-                  {location.choice} lựa chọn
-                </Text>
-              </View>
-            </View>
-          </View>
-        </FastImage>
-      </TouchableOpacity>
-    );
-  };
+  const [locationData, setLocationData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setIsLoading(true);
+        const res = await locationAPI.getAll();
+        setLocationData(res.data);
+        setIsLoading(false);
+        // console.log(locationData);
+      } catch (error) {
+        console.log('Error API Location', error);
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -70,14 +53,16 @@ const LocationScreen = ({navigation}) => {
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           name="sort"
           size={28}
-          color={COLORS.white}/>
+          color={COLORS.white}
+        />
         <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
           Địa điểm
         </Text>
         <MaterialIcons
           name="notifications-none"
           size={28}
-          color={COLORS.white}/>
+          color={COLORS.white}
+        />
       </LinearGradient>
       <ScrollView showsVerticalScrollIndicator={false}>
         <LinearGradient
@@ -91,45 +76,61 @@ const LocationScreen = ({navigation}) => {
           }}>
           <View>
             <View style={styles.inputSearch}>
-              <MaterialIcons name="search" size={28} />
-              <TextInput
-                placeholder="Tìm địa điểm"
-                underlineColorAndroid="transparent"
-                style={styles.textInput}
-                autoCapitalize="none"
-              />
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('SearchLocationScreen', locationData)
+                }
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  paddingHorizontal: 20,
+                  alignItems: 'center',
+                }}
+                activeOpacity={0.9}>
+                <MaterialIcons name="search" size={28} />
+                <TextInput
+                  placeholder="Tìm địa điểm"
+                  underlineColorAndroid="transparent"
+                  editable={false}
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </LinearGradient>
         <Text style={styles.sectionTittle}>Địa điểm phổ biến </Text>
-        <View style={{flexDirection: 'row', paddingHorizontal: 20}}>
-          <View>
-            {locations
-              .filter((_, i) => i % 2 === 0) // lọc số thứ tự chẵn => cột lẻ
-              .map((location, index) => (
-                <LocationCard
-                  key={location.id}
-                  location={location}
-                  // aspectRatio={200 - (index % 3) * 50}
-                  aspectRatio={130 + (index % 2) * 25} // 2 loại tỉ lệ khung hình
-                  // aspectRatio={185 - (index % 3) * 20} // 3 loại
-                />
-              ))}
+        {locationData && locationData.length !== 0 && (
+          <View style={{flexDirection: 'row', paddingHorizontal: 20}}>
+            <View>
+              {locationData
+                .slice(0, 10)
+                .filter((_, i) => i % 2 === 0) // loc STT chan => cot le
+                .map((location, index) => (
+                  <LocationCard
+                    key={location.MaDD}
+                    navigation={navigation}
+                    location={location}
+                    // aspectRatio={200 - (index % 3) * 50}
+                    aspectRatio={130 + (index % 2) * 25} // 2 loai tlkh
+                  />
+                ))}
+            </View>
+            <View>
+              {locationData
+                .slice(0, 10)
+                .filter((_, i) => i % 2 !== 0)
+                .map((location, index) => (
+                  <LocationCard
+                    key={location.MaDD}
+                    navigation={navigation}
+                    location={location}
+                    aspectRatio={100 + (index % 3) * 50} // 3 loai
+                  />
+                ))}
+            </View>
           </View>
-          <View>
-            {locations
-              .filter((_, i) => i % 2 !== 0)
-              .map((location, index) => (
-                <LocationCard
-                  key={location.id}
-                  location={location}
-                  // aspectRatio={100 + (index % 3) * 50}
-                  aspectRatio={100 + (index % 3) * 50}
-                  // aspectRatio={125 + (index % 3) * 40}
-                />
-              ))}
-          </View>
-        </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -158,14 +159,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.whiteT,
   },
-  cardImage: {
-    width: (width - 60) / 2,
-    height: 100,
-    marginRight: 20,
-    marginBottom: 20,
-    overflow: 'hidden',
-    borderRadius: 10,
-  },
   textInput: {
     flex: 1,
     paddingLeft: 5,
@@ -182,10 +175,8 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
     height: 55,
-    borderRadius: 10,
-    flexDirection: 'row',
-    paddingHorizontal: 20,
     alignItems: 'center',
+    borderRadius: 10,
     backgroundColor: COLORS.white,
     elevation: 12,
   },
