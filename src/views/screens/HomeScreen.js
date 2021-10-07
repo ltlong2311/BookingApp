@@ -77,14 +77,14 @@ const HomeScreen = ({navigation}) => {
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           name="sort"
           size={28}
-          color={COLORS.white}></MaterialIcons>
+          color={COLORS.white} />
         <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
           KMAHotel
         </Text>
         <MaterialIcons
           name="notifications-none"
           size={28}
-          color={COLORS.white}></MaterialIcons>
+          color={COLORS.white} />
       </LinearGradient>
       <ScrollView
         showsVerticalScrollIndicator={false}

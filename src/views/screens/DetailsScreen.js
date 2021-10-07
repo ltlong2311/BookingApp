@@ -16,6 +16,8 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import config from '../../../config';
+import MapView from 'react-native-maps';
+import {WebView} from 'react-native-webview';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -64,7 +66,7 @@ const DetailsScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <StatusBar style="light" translucent backgroundColor="transparent"/>
+      <StatusBar style="light" translucent backgroundColor="transparent" />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
@@ -196,9 +198,32 @@ const DetailsScreen = ({navigation, route}) => {
               {toText(hotel.content)}
             </Text>
           </View>
+          {/* <MapView
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          /> */}
+          {/* <View
+            style={{
+              flex: 1,
+              alignSelf: 'stretch',
+            }}>
+            <WebView
+          style={{flex: 1}}
+          source={{
+            uri: "https://www.google.com/maps/place/28%C2%B041'55.5%22N+77%C2%B017'33.3%22E/@28.698835,77.2905996,16.74z/data=!4m5!3m4!1s0x0:0x0!8m2!3d28.6987568!4d77.2925771",
+          }}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          startInLoadingState={true}
+        />
+          </View> */}
         </View>
       </ScrollView>
-      <View style={styles.buy}>
+      <View style={styles.book}>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
           <Text
             style={{
@@ -224,6 +249,7 @@ const DetailsScreen = ({navigation, route}) => {
         </View>
         <View style={styles.btnBook}>
           <Text
+            onPress={() => navigation.push('BookingScreen', hotel)}
             style={{
               color: COLORS.primary,
               fontSize: 16,
@@ -275,7 +301,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'rgba(0, 0, 0, .1)',
   },
-  buy: {
+  book: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

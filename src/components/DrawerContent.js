@@ -47,7 +47,7 @@ export const DrawerContent = props => {
 
   const getValue = async () => {
     let token = await AsyncStore.getItem('userToken');
-    if (token) setUserInfo(jwt_decode(token));
+    token && setUserInfo(jwt_decode(token));
     // console.log(token);
     // console.log(userInfo);
   };
@@ -67,8 +67,9 @@ export const DrawerContent = props => {
                   marginTop: 10,
                 }}>
                 <Avatar.Image
+                  style={{borderColor: COLORS.greyLynch, borderWidth: 1, overflow: 'hidden'}}
                   source={{
-                    uri: 'https://scontent.fhan3-4.fna.fbcdn.net/v/t1.6435-9/119057866_1444322012423771_248923324908347500_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=f3tuwZA1nMkAX_EWwY5&tn=kJ4eP7UckXSzkNsm&_nc_ht=scontent.fhan3-4.fna&oh=e8a6ffbc4202dbc37807a2f1ab4ad6ff&oe=615B611E',
+                    uri: 'https://i.imgur.com/An3S07z.jpg',
                   }}
                   size={50}
                 />

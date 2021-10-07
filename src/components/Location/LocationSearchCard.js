@@ -16,45 +16,40 @@ const {width} = Dimensions.get('screen');
 
 const LocationSearchCard = ({location, navigation}) => {
   return (
-    <View
-      style={{
-        marginTop: 20,
-        marginHorizontal: 15,
-      }}>
-      <TouchableHighlight
-        activeOpacity={0.9}
-        onPress={() => navigation.navigate('LocationDetails', location)}>
-        <View style={styles.locationSearchCard}>
-          <FastImage
-            style={styles.cardImage}
-            source={{
-              uri: location.content,
-            }}
-            resizeMode={FastImage.resizeMode.cover}
-          />
-          <View style={styles.cardInfo}>
-            <Text
-              style={{
-                color: COLORS.dark,
-                fontSize: 15,
-                fontWeight: 'bold',
-              }}>
-              {location.tenDD}
-            </Text>
-            <Text style={{fontSize: 13, color: COLORS.darkMinus}}>
-              {location.diaChi}
-            </Text>
-            <Text
-              style={{
-                color: COLORS.redTorn,
-                fontSize: 13,
-              }}>
-              {location.total} khách sạn
-            </Text>
-          </View>
+    <TouchableHighlight
+      activeOpacity={0.9}
+      style={{marginTop: 20}}
+      onPress={() => navigation.navigate('LocationDetails', location)}>
+      <View style={styles.locationSearchCard}>
+        <FastImage
+          style={styles.cardImage}
+          source={{
+            uri: location.content,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <View style={styles.cardInfo}>
+          <Text
+            style={{
+              color: COLORS.dark,
+              fontSize: 15,
+              fontWeight: 'bold',
+            }}>
+            {location.tenDD}
+          </Text>
+          <Text style={{fontSize: 13, color: COLORS.darkMinus}}>
+            {location.diaChi}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.redTorn,
+              fontSize: 13,
+            }}>
+            {location.total} khách sạn
+          </Text>
         </View>
-      </TouchableHighlight>
-    </View>
+      </View>
+    </TouchableHighlight>
   );
 };
 
@@ -62,10 +57,11 @@ const styles = StyleSheet.create({
   locationSearchCard: {
     flexDirection: 'row',
     flex: 1,
+    paddingHorizontal: 15,
+    backgroundColor: COLORS.white,
   },
   cardInfo: {
     flex: 1,
-    backgroundColor: COLORS.white,
     paddingLeft: 15,
     flexDirection: 'column',
     justifyContent: 'space-around',

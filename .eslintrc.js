@@ -18,5 +18,6 @@ module.exports = {
     'no-dupe-keys': 0,
     'curly': 0,
     'quotes': 0,
+    'radix': 0,
   },
 };

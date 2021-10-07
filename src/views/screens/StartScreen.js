@@ -80,8 +80,6 @@ const StartScreen = ({navigation}) => {
   );
 };
 
-export default StartScreen;
-
 const styles = StyleSheet.create({
   content: {
     height: '50%',
@@ -114,3 +112,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export default StartScreen;

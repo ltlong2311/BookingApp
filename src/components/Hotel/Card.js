@@ -45,7 +45,7 @@ const Card = ({hotel, navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <MaterialIcons name="place" size={20} color={COLORS.white} />
               <Text style={{marginLeft: 5, color: COLORS.white}}>
-                {hotel.diaDiem.tenDD}
+                {hotel.location.tenDD}
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>

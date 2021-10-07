@@ -218,8 +218,6 @@ const PostDetails = ({route, navigation}) => {
   );
 };
 
-export default PostDetails;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -285,7 +283,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     color: '#05375a',
     fontSize: 15,
-    // backgroundColor: "#f2f3f4",
-    // borderRadius: 15,
   },
 });
+
+export default PostDetails;

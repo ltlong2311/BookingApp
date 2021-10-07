@@ -52,10 +52,12 @@ const UserProfileScreen = ({navigation}) => {
                       width: 60,
                       height: 60,
                       overflow: 'hidden',
+                      borderColor: COLORS.blueLight,
+                      borderWidth: 2,
                       borderRadius: 60 / 2,
                     }}
                     source={{
-                      uri: 'https://scontent.fhan3-4.fna.fbcdn.net/v/t1.6435-9/119057866_1444322012423771_248923324908347500_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=f3tuwZA1nMkAX_EWwY5&tn=kJ4eP7UckXSzkNsm&_nc_ht=scontent.fhan3-4.fna&oh=e8a6ffbc4202dbc37807a2f1ab4ad6ff&oe=615B611E',
+                      uri: 'https://i.imgur.com/An3S07z.jpg',
                     }}
                   />
                   <Text style={styles.textHeader}>{userInfo.hoTen}</Text>
@@ -75,9 +77,7 @@ const UserProfileScreen = ({navigation}) => {
                   <TouchableOpacity
                     actionOpacity={0.8}
                     onPress={() => navigation.push('Login')}>
-                    <View
-                      colors={['#08c4ed', '#41BEDA']}
-                      style={styles.buttonLogin}>
+                    <View style={styles.buttonLogin}>
                       <Text style={styles.textSign}>Đăng nhập</Text>
                     </View>
                   </TouchableOpacity>
@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
     flexDirection: 'row',
     backgroundColor: COLORS.blueLight,
   },

@@ -32,7 +32,7 @@ const LocationScreen = ({navigation}) => {
       try {
         setIsLoading(true);
         const res = await locationAPI.getAll();
-        setLocationData(res.data);
+        if (res) setLocationData(res.data);
         setIsLoading(false);
         // console.log(locationData);
       } catch (error) {

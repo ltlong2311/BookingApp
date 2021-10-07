@@ -1,22 +1,18 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import {
   View,
   SafeAreaView,
   // StatusBar,
   StyleSheet,
   Text,
-  ImageBackground,
-  FlatList,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import COLORS from '../../consts/colors';
-import config from '../../../config';
-
 // import {PanoramaView} from '@lightbase/react-native-panorama-view';
 import {WebView} from 'react-native-webview';
+
 const {width, height} = Dimensions.get('screen');
 
 const PanoramaScreen = ({navigation, route}) => {
