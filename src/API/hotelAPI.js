@@ -1,11 +1,13 @@
 import axiosClient from './axiosClient';
 
-const headers = {
-  'Content-Type': 'application/json',
-};
 class HotelAPI {
   getAll = () => {
     const url = `/hotels`;
+    return axiosClient.get(url);
+  };
+  getOne = (ID) => {
+    const url = `/hotels/${ID}`;
+    console.log(url);
     return axiosClient.get(url);
   };
   getByLocation = (locationID) => {

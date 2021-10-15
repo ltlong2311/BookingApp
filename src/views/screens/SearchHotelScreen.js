@@ -125,9 +125,6 @@ const SearchHotelScreen = ({navigation}) => {
         <View evaluate={10} style={styles.searchDropDown}>
           {dataSearch.slice(0, 9).map((dataHotel, index) => (
             <Text
-              // onPress={() =>
-              //   navigation.navigate('SearchHotelDetailScreen', dataHotel)
-              // }
               onPress={() => {
                 autoCompleteSearch(dataHotel.tenKS, dataHotel);
               }}

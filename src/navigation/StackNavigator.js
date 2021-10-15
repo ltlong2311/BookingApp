@@ -4,8 +4,12 @@ import HomeScreen from '../views/screens/HomeScreen';
 import LocationScreen from '../views/screens/LocationScreen';
 import LocationDetailsScreen from '../views/screens/LocationDetailsScreen';
 import ForumScreen from '../views/screens/ForumScreen';
-import {StatusBar} from 'react-native';
 import SearchLocationScreen from '../views/screens/SearchLocationScreen';
+import UserProfileEditScreen from '../views/screens/UserProfileEditScreen';
+import UserProfileScreen from '../views/screens/UserProfileScreen';
+import SaveListScreen from '../views/screens/SaveListScreen';
+import NewsScreen from '../views/screens/NewsScreen';
+import NewsDetailScreen from '../views/screens/NewsDetailsScreen';
 const Stack = createStackNavigator();
 const screenOptionStyle = {
   headerShown: false,
@@ -22,7 +26,10 @@ const LocationStackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="LocationScreen" component={LocationScreen} />
       <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} />
-      <Stack.Screen name="SearchLocationScreen" component={SearchLocationScreen} />
+      <Stack.Screen
+        name="SearchLocationScreen"
+        component={SearchLocationScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -33,5 +40,29 @@ const ForumStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+const NewsStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen name="NewsScreen" component={NewsScreen} />
+      <Stack.Screen name="NewsDetails" component={NewsDetailScreen} />
+    </Stack.Navigator>
+  );
+};
 
-export {HomeStackNavigator, LocationStackNavigator, ForumStackNavigator};
+const UserProfileStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+      <Stack.Screen name="UserProfileEdit" component={UserProfileEditScreen} />
+      <Stack.Screen name="SaveList" component={SaveListScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export {
+  HomeStackNavigator,
+  LocationStackNavigator,
+  ForumStackNavigator,
+  UserProfileStackNavigator,
+  NewsStackNavigator,
+};

@@ -9,8 +9,13 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
+import AsyncStore from '@react-native-async-storage/async-storage';
 
 const {width} = Dimensions.get('screen');
+
+const saveData = async (key, value) => {
+  await AsyncStore.setItem(key, value);
+};
 
 const HotelByLocationCard = ({hotel, navigation}) => {
   return (
@@ -29,13 +34,17 @@ const HotelByLocationCard = ({hotel, navigation}) => {
                 borderTopLeftRadius: 15,
                 borderTopRightRadius: 15,
               }}>
-              <View style={styles.btnSave}>
-                <MaterialIcons
-                  name="bookmark-outline"
-                  size={28}
-                  color={COLORS.white}
-                />
-              </View>
+              <TouchableOpacity
+                actionOpacity={0.8}
+                onPress={() => saveData('ID', hotel.MaKS)}>
+                <View style={styles.btnSave}>
+                  <MaterialIcons
+                    name="bookmark-outline"
+                    size={28}
+                    color={COLORS.white}
+                  />
+                </View>
+              </TouchableOpacity>
               <View style={styles.rating}>
                 <Text
                   style={{
@@ -76,14 +85,17 @@ const HotelByLocationCard = ({hotel, navigation}) => {
               justifyContent: 'space-between',
               paddingTop: 5,
             }}>
-            <Text style={[{color: COLORS.greyLynch, fontSize: 12, width: '60%'}]}>
+            <Text
+              style={[{color: COLORS.greyLynch, fontSize: 12, width: '60%'}]}>
               {hotel.diaChi}
             </Text>
             <Text style={[{color: COLORS.blueChambray, fontSize: 12}]}>
-            <Text
-              style={[{color: COLORS.monza, fontWeight: 'bold', fontSize: 15}]}>
-              {hotel.email} VND / đêm
-            </Text>
+              <Text
+                style={[
+                  {color: COLORS.monza, fontWeight: 'bold', fontSize: 15},
+                ]}>
+                {hotel.email} VND / đêm
+              </Text>
             </Text>
           </View>
         </View>

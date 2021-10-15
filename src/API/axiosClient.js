@@ -4,9 +4,6 @@ import config from '../../config';
 
 const axiosClient = axios.create({
   baseURL: config.REACT_APP_BACKEND_API_URL,
-  headers: {
-    'Content-type': 'application/json',
-  },
   paramsSerializer: params => queryString.stringify(params),
 });
 

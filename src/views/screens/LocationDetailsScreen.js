@@ -5,14 +5,12 @@ import {
   View,
   Text,
   ActivityIndicator,
-  Animated,
   StatusBar,
   FlatList,
   ScrollView,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
-import hotelsByLocation from '../../consts/hotelsByLocation';
 import HotelByLocationCard from '../../components/Hotel/HotelByLocationCard';
 import FastImage from 'react-native-fast-image';
 import hotelAPI from '../../API/hotelAPI';
@@ -48,7 +46,7 @@ const LocationDetailsScreen = ({navigation, route}) => {
     }
   };
 
-  console.log(hotelsInLocation);
+  // console.log(hotelsInLocation);
 
   const getHeader = () => {
     return (

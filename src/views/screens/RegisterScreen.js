@@ -165,7 +165,6 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-
     marginBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#BFBBBB',

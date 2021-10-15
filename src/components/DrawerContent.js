@@ -24,7 +24,7 @@ import {set} from 'react-native-reanimated';
 import COLORS from '../consts/colors';
 import LinearGradient from 'react-native-linear-gradient';
 
-async function deleteToken(key) {
+async function removeDataStore(key) {
   await AsyncStore.removeItem(key);
 }
 
@@ -41,7 +41,8 @@ export const DrawerContent = props => {
   };
 
   const logOut = () => {
-    deleteToken('userToken');
+    removeDataStore('userToken');
+    removeDataStore('userID');
     props.navigation.push('Login');
   };
 
@@ -67,7 +68,11 @@ export const DrawerContent = props => {
                   marginTop: 10,
                 }}>
                 <Avatar.Image
-                  style={{borderColor: COLORS.greyLynch, borderWidth: 1, overflow: 'hidden'}}
+                  style={{
+                    borderColor: COLORS.greyLynch,
+                    borderWidth: 1,
+                    overflow: 'hidden',
+                  }}
                   source={{
                     uri: 'https://i.imgur.com/An3S07z.jpg',
                   }}
@@ -118,6 +123,19 @@ export const DrawerContent = props => {
             label="Home"
             onPress={() => {
               props.navigation.navigate('HomeScreen');
+            }}
+          />
+           <DrawerItem
+            icon={({color, size}) => (
+              <MaterialCommunityIcons
+                name="home-outline"
+                color={color}
+                size={size}
+              />
+            )}
+            label="Đã lưu"
+            onPress={() => {
+              props.navigation.navigate('User', { screen: 'SaveList' });
             }}
           />
           <DrawerItem
@@ -171,7 +189,7 @@ export const DrawerContent = props => {
             )}
             label="Tài khoản"
             onPress={() => {
-              props.navigation.navigate('Test');
+              props.navigation.navigate('User');
             }}
           />
           <DrawerItem

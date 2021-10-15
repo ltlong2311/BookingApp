@@ -18,6 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../../consts/colors';
 import AsyncStore from '@react-native-async-storage/async-storage';
 import userAPI from '../../API/userAPI';
+import jwt_decode from 'jwt-decode';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -33,7 +34,7 @@ const LoginScreen = ({navigation}) => {
     setSecureTextEntry(!secureTextEntry);
   };
 
-  const saveToken = async (key, value) => {
+  const saveData = async (key, value) => {
     await AsyncStore.setItem(key, value);
   };
 
@@ -56,14 +57,19 @@ const LoginScreen = ({navigation}) => {
         const res = await userAPI.login(formData);
         console.log(res);
         if (res.status === 'success') {
-          saveToken('userToken', res.data.token);
-          getValue('userToken');
+          let token = res.data.token;
+          saveData('userToken', token);
+          // getValue('userToken');
+          const userInfo = jwt_decode(token);
+          const userID = userInfo.ID.toString();
+          saveData('userID', userID);
           setIsLoading(false);
           navigation.push('Home');
         }
       }
     } catch (error) {
       console.log([Error, error]);
+      setIsLoading(false);
     }
   };
 

@@ -25,6 +25,7 @@ const RoomCard = props => {
   const totalRoomPrice = props.room.gia * numOfRooms;
 
   const roomName = props.room.tenPhong;
+  const roomID = props.room.MaPhong;
 
   const changeShowInfoRoom = () => {
     setShowInfoRoom(!showInfoRoom);
@@ -42,7 +43,7 @@ const RoomCard = props => {
       ? createAlert('Thời điểm trả phòng phải sau thời điểm nhận phòng')
       : props.timeStay > 90
       ? createAlert('Thời gian đặt phòng không quá 90 ngày!')
-      : props.selectRoom(totalRoomPrice, roomName);
+      : props.selectRoom(totalRoomPrice, roomName, roomID);
   };
 
   const createAlert = text => Alert.alert('Nhắc nhở', text, [{text: 'OK'}]);

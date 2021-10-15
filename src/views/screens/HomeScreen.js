@@ -18,6 +18,7 @@ import hotelHighlights from '../../consts/hotelHighlights';
 import {DrawerActions} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import hotelAPI from '../../API/hotelAPI';
+import userAPI from '../../API/userAPI';
 import Card from '../../components/Hotel/Card';
 import RecommendCard from '../../components/Hotel/RecommendedCard';
 
@@ -31,6 +32,7 @@ const HomeScreen = ({navigation}) => {
   let position = Animated.divide(scrollX, width);
   const ref = useRef(null);
 
+
   useEffect(() => {
     setDataList(hotelHighlights);
     infiniteScroll(dataList);
@@ -43,7 +45,9 @@ const HomeScreen = ({navigation}) => {
       }
     };
     getData();
+    // route.params && getUserInfo();
   }, []);
+
 
   const infiniteScroll = dataList => {
     const numberOfData = dataList.length;
@@ -77,14 +81,16 @@ const HomeScreen = ({navigation}) => {
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           name="sort"
           size={28}
-          color={COLORS.white} />
+          color={COLORS.white}
+        />
         <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
           KMAHotel
         </Text>
         <MaterialIcons
           name="notifications-none"
           size={28}
-          color={COLORS.white} />
+          color={COLORS.white}
+        />
       </LinearGradient>
       <ScrollView
         showsVerticalScrollIndicator={false}

@@ -128,6 +128,7 @@ const hotelHighlights = [
       'assets/uploads/16844758936147100b066329.21622551.jpg',
     ],
     createDate: '2021-09-19 17:25:16',
+    rooms: [],
   },
   {
     MaKS: '4',
@@ -156,6 +157,7 @@ const hotelHighlights = [
       'assets/uploads/16844758936147100b066329.21622551.jpg',
     ],
     createDate: '2021-09-19 17:25:16',
+    rooms: [],
   },
 ];
 

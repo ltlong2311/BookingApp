@@ -5,6 +5,7 @@ const COLORS = {
     darkSub: '#727272',
     darkTile: '#343434',
     darkMinus: '#6b6b6b',
+    darkWen: '#d5d5d5',
     black: '#1E1E1E',
     primary: '#04555c',
     secondary: '#e1e8e9',

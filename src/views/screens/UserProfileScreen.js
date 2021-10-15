@@ -7,13 +7,13 @@ import {
   ImageBackground,
   Dimensions,
   ScrollView,
-  TextInput,
+  Alert,
+  BackHandler,
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import LinearGradient from 'react-native-linear-gradient';
 import COLORS from '../../consts/colors';
 import AsyncStore from '@react-native-async-storage/async-storage';
 import jwt_decode from 'jwt-decode';
@@ -23,6 +23,7 @@ const {width, height} = Dimensions.get('screen');
 
 const UserProfileScreen = ({navigation}) => {
   const [userInfo, setUserInfo] = useState();
+  const [userToken, setUserToken] = useState();
 
   useEffect(() => {
     getValue();
@@ -31,8 +32,37 @@ const UserProfileScreen = ({navigation}) => {
   const getValue = async () => {
     let token = await AsyncStore.getItem('userToken');
     if (token) setUserInfo(jwt_decode(token));
+    setUserToken(token);
     // console.log(token);
   };
+
+  async function removeDataStore(key) {
+    await AsyncStore.removeItem(key);
+  }
+
+  const logOut = () => {
+    removeDataStore('userToken');
+    removeDataStore('userID');
+    navigation.push('Login');
+  };
+
+  const backPressed = () => {
+    Alert.alert(
+      'Thoát ứng dụng',
+      'Xác nhận muốn thoát?',
+      [
+        {
+          text: 'Không',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'Có', onPress: () => BackHandler.exitApp()},
+      ],
+      {cancelable: false},
+    );
+    return true;
+  };
+
   return (
     <>
       <StatusBar barStyle="light-content" />
@@ -60,7 +90,7 @@ const UserProfileScreen = ({navigation}) => {
                       uri: 'https://i.imgur.com/An3S07z.jpg',
                     }}
                   />
-                  <Text style={styles.textHeader}>{userInfo.hoTen}</Text>
+                  <Text style={styles.textHeader}>{userInfo.username}</Text>
                 </View>
               </View>
             ) : (
@@ -86,67 +116,96 @@ const UserProfileScreen = ({navigation}) => {
             )}
           </ImageBackground>
           <View style={{flex: 2, paddingHorizontal: 30}}>
-            <Text style={styles.sectionTittle}>Cá nhân </Text>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingBottom: 20,
-                }}>
-                <MaterialCommunityIcons size={25} name="account-outline" />
-                <Text style={styles.content}>Quản lý tài khoản</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingBottom: 20,
-                }}>
-                <MaterialCommunityIcons
-                  size={25}
-                  name="bookmark-multiple-outline"
-                />
-                <Text style={styles.content}>Đã lưu</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <MaterialCommunityIcons size={25} name="account-outline" />
-                <Text style={styles.content}>Danh sách đặt trước</Text>
-              </View>
-            </View>
+            {userInfo && (
+              <>
+                <Text style={styles.sectionTittle}>Cá nhân </Text>
+                <View>
+                  <TouchableOpacity
+                    actionOpacity={0.8}
+                    onPress={() =>
+                      navigation.push('UserProfileEdit', {
+                        token: userToken,
+                        userProfile: userInfo,
+                      })
+                    }>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingBottom: 20,
+                      }}>
+                      <MaterialCommunityIcons
+                        size={25}
+                        name="account-outline"
+                      />
+                      <Text style={styles.content}>Quản lý tài khoản</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingBottom: 20,
+                    }}>
+                    <MaterialCommunityIcons
+                      size={25}
+                      name="bookmark-multiple-outline"
+                    />
+                    <Text style={styles.content}>Đã lưu</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <MaterialCommunityIcons size={25} name="account-outline" />
+                    <Text style={styles.content}>Danh sách đặt trước</Text>
+                  </View>
+                </View>
+              </>
+            )}
             <Text style={styles.sectionTittle}>Khám phá </Text>
             <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingBottom: 20,
-                }}>
-                <Ionicons size={25} name="md-map-outline" />
-                <Text style={styles.content}>Địa điểm nổi bật</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingBottom: 20,
-                }}>
-                <Ionicons size={25} name="earth-sharp" />
-                <Text style={styles.content}>Diễn đàn</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingBottom: 20,
-                }}>
-                <MaterialCommunityIcons size={25} name="airballoon-outline" />
-                <Text style={styles.content}>Thông tin du lịch</Text>
-              </View>
+              <TouchableOpacity
+                actionOpacity={0.8}
+                onPress={() => navigation.navigate('Location')}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingBottom: 20,
+                  }}>
+                  <Ionicons size={25} name="md-map-outline" />
+                  <Text style={styles.content}>Địa điểm nổi bật</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                actionOpacity={0.8}
+                onPress={() => navigation.navigate('Forum')}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingBottom: 20,
+                  }}>
+                  <Ionicons size={25} name="earth-sharp" />
+                  <Text style={styles.content}>Diễn đàn</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                actionOpacity={0.8}
+                onPress={() => navigation.navigate('Active')}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingBottom: 20,
+                  }}>
+                  <MaterialCommunityIcons size={25} name="airballoon-outline" />
+                  <Text style={styles.content}>Thông tin du lịch</Text>
+                </View>
+              </TouchableOpacity>
               <View
                 style={{
                   flexDirection: 'row',
@@ -175,7 +234,15 @@ const UserProfileScreen = ({navigation}) => {
                   paddingBottom: 20,
                 }}>
                 <Ionicons size={25} name="log-out-outline" />
-                <Text style={styles.content}>Đăng xuất</Text>
+                {userInfo ? (
+                  <TouchableOpacity actionOpacity={0.8} onPress={logOut}>
+                    <Text style={styles.content}>Đăng xuất</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity actionOpacity={0.8} onPress={backPressed}>
+                    <Text style={styles.content}>Thoát</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           </View>

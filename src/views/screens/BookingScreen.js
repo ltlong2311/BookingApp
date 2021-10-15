@@ -18,14 +18,24 @@ import COLORS from '../../consts/colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import AsyncStore from '@react-native-async-storage/async-storage';
 import jwt_decode from 'jwt-decode';
+import userAPI from '../../API/userAPI';
 
 const {width, height} = Dimensions.get('screen');
 
-const convertDateToString = date => {
+const convertDateToString = (date, mode) => {
   let year = date.getFullYear();
   let month = (1 + date.getMonth()).toString().padStart(2, '0');
   let day = date.getDate().toString().padStart(2, '0');
-  return month + '/' + day + '/' + year;
+  var dateString = '';
+  mode === 1
+    ? (dateString = month + '/' + day + '/' + year)
+    : mode === 2
+    ? (dateString = year + '/' + month + '/' + day)
+    : mode === 3
+    ? (dateString = day + '/' + month + '/' + year)
+    : '';
+
+  return dateString;
 };
 
 const getTimeStay = (dateStart, dateEnd) => {
@@ -48,15 +58,20 @@ const BookingScreen = ({navigation, route}) => {
   const hotel = route.params;
   const rooms = hotel.rooms;
   const [timeStay, setTimeStay] = useState(1);
-  const [totalPrice, setTotalPrice] = useState();
-  const [roomName, setRoomName] = useState();
+  const [priceRoom, setPriceRoom] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [userID, setUserID] = useState();
+  const [token, setToken] = useState();
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState();
   const [showDatePicker1, setShowDatePicker1] = useState(false);
   const [showDatePicker2, setShowDatePicker2] = useState(false);
   const [showBookingSubmitBtn, setShowBookingSubmitBtn] = useState(false);
+
+  const [roomInfo, setRoomInfo] = useState({
+    roomID: '',
+    roomName: '',
+  });
 
   useEffect(() => {
     getValue();
@@ -64,10 +79,12 @@ const BookingScreen = ({navigation, route}) => {
 
   const getValue = async () => {
     let token = await AsyncStore.getItem('userToken');
-    token && setUserInfo(jwt_decode(token));
-    setIsLogin(true);
-    // console.log(token);
-    // console.log(userInfo);
+    let userID = await AsyncStore.getItem('userID');
+    if (token) {
+      setIsLogin(true);
+      setToken(token);
+    }
+    userID && setUserID(userID);
   };
 
   const showDatePicker = () => {
@@ -79,10 +96,10 @@ const BookingScreen = ({navigation, route}) => {
   };
 
   const handleConfirm = date => {
-    const dateStart = convertDateToString(date);
-    const dateEnd = convertDateToString(endDate);
+    const dateStart = convertDateToString(date, 1);
+    const dateEnd = convertDateToString(endDate, 1);
     const startDay = new Date(dateStart).getTime();
-    const today = new Date(convertDateToString(now)).getTime();
+    const today = new Date(convertDateToString(now, 1)).getTime();
 
     if (startDay >= today) {
       setStartDate(date);
@@ -110,17 +127,17 @@ const BookingScreen = ({navigation, route}) => {
 
   const handleConfirmEnd = date => {
     setEndDate(date);
-    const dateStart = convertDateToString(startDate);
-    const dateEnd = convertDateToString(date);
+    const dateStart = convertDateToString(startDate, 1);
+    const dateEnd = convertDateToString(date, 1);
     const timeBetween = getTimeStay(dateStart, dateEnd);
     setTimeStay(timeBetween);
     hideDatePickerEnd();
   };
 
-  const selectRoom = (totalPriceRoom, roomName) => {
+  const selectRoom = (totalPriceRoom, roomName, idRoom) => {
     setShowBookingSubmitBtn(true);
-    setTotalPrice(totalPriceRoom);
-    setRoomName(roomName);
+    setPriceRoom(totalPriceRoom);
+    setRoomInfo({...roomInfo, roomID: idRoom, roomName: roomName});
   };
 
   const alert = text => Alert.alert('Nhắc nhở', text, [{text: 'OK'}]);
@@ -130,7 +147,16 @@ const BookingScreen = ({navigation, route}) => {
       ? alert('Thời điểm trả phòng phải sau thời điểm nhận phòng')
       : timeStay > 90
       ? alert('Thời gian đặt phòng không quá 90 ngày!')
-      : navigation.push('BookingConfirmScreen', userInfo);
+      : isLogin
+      ? navigation.push('BookingConfirmScreen', {
+          userID: userID,
+          token: token,
+          roomInfo: roomInfo,
+          startDate: convertDateToString(startDate, 2),
+          endDate: convertDateToString(endDate, 2),
+          cost: priceRoom * timeStay,
+        })
+      : navigation.push('Login');
   };
 
   // console.log(typeof startDate, startDate);
@@ -177,7 +203,7 @@ const BookingScreen = ({navigation, route}) => {
               <View style={{alignItems: 'center'}}>
                 <Text style={styles.textTittle}>Ngày nhận</Text>
                 <Text onPress={showDatePicker} style={styles.dateText}>
-                  {convertDateToString(startDate)}
+                  {convertDateToString(startDate, 3)}
                 </Text>
               </View>
               <MaterialIcons
@@ -188,7 +214,7 @@ const BookingScreen = ({navigation, route}) => {
               <View style={{alignItems: 'center'}}>
                 <Text style={styles.textTittle}>Ngày trả</Text>
                 <Text onPress={showDatePickerEnd} style={styles.dateText}>
-                  {convertDateToString(endDate)}
+                  {convertDateToString(endDate, 3)}
                 </Text>
               </View>
             </View>
@@ -233,7 +259,7 @@ const BookingScreen = ({navigation, route}) => {
                     fontSize: 18,
                     fontWeight: 'bold',
                   }}>
-                  {convertNumber(totalPrice * timeStay)} đ
+                  {convertNumber(priceRoom * timeStay)} đ
                 </Text>
               </View>
               <View>
@@ -248,9 +274,7 @@ const BookingScreen = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity
-              actionOpacity={0.8}
-              onPress={bookingSubmit}>
+            <TouchableOpacity actionOpacity={0.8} onPress={bookingSubmit}>
               <View style={styles.btnBookingConfirm}>
                 <Text style={styles.textBtn}>Xác nhận</Text>
               </View>

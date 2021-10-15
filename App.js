@@ -29,6 +29,8 @@ import SearchLocationScreen from './src/views/screens/SearchLocationScreen';
 import BookingConfirmScreen from './src/views/screens/BookingConfirmScreen';
 import BookingScreen from './src/views/screens/BookingScreen';
 import NewsScreen from './src/views/screens/NewsScreen';
+import ViewHotelLocationScreen from './src/views/screens/ViewHotelLocationScreen';
+import BookingSuccessScreen from './src/views/screens/BookingSuccessScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,11 +48,13 @@ const App = () => {
         <Stack.Screen name="StartScreen" component={StartScreen} />
         <Stack.Screen name="Home" component={DrawerNavigator} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+        <Stack.Screen name="ViewHotelLocationScreen" component={ViewHotelLocationScreen} />
         <Stack.Screen name="ImageHotelScreen" component={ImageHotelScreen} />
         <Stack.Screen name="PanoramaScreen" component={PanoramaScreen} />
         <Stack.Screen name="SearchHotelScreen" component={SearchHotelScreen} />
         <Stack.Screen name="BookingScreen" component={BookingScreen} />
         <Stack.Screen name="BookingConfirmScreen" component={BookingConfirmScreen} />
+        <Stack.Screen name="BookingSuccessScreen" component={BookingSuccessScreen} />
         <Stack.Screen name="NewsScreen" component={NewsScreen} />
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="Login" component={LoginScreen} />

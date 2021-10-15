@@ -16,8 +16,9 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import config from '../../../config';
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {WebView} from 'react-native-webview';
+import AsyncStore from '@react-native-async-storage/async-storage';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -38,6 +39,7 @@ function convertHTMLEntity(text) {
 
 const DetailsScreen = ({navigation, route}) => {
   const hotel = route.params;
+  console.log(route.params);
   const [dataList, setDataList] = useState(hotel.image.slice(0, 4));
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
@@ -198,29 +200,47 @@ const DetailsScreen = ({navigation, route}) => {
               {toText(hotel.content)}
             </Text>
           </View>
-          {/* <MapView
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          /> */}
-          {/* <View
+
+          <Text
             style={{
-              flex: 1,
-              alignSelf: 'stretch',
+              marginTop: 10,
+              marginBottom: 10,
+              fontWeight: 'bold',
+              fontSize: 20,
             }}>
-            <WebView
-          style={{flex: 1}}
-          source={{
-            uri: "https://www.google.com/maps/place/28%C2%B041'55.5%22N+77%C2%B017'33.3%22E/@28.698835,77.2905996,16.74z/data=!4m5!3m4!1s0x0:0x0!8m2!3d28.6987568!4d77.2925771",
-          }}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          startInLoadingState={true}
-        />
-          </View> */}
+            Vị trí
+          </Text>
+          <View>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              style={{height: 150}}
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
+            <View style={styles.viewMapBtn}>
+              <TouchableOpacity onPress={()=> navigation.push('ViewHotelLocationScreen', hotel)}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <MaterialIcons
+                    name="place"
+                    size={13}
+                    color={COLORS.blueLight}
+                  />
+                  <Text
+                    style={{
+                      paddingRight: 5,
+                      fontSize: 10,
+                      color: COLORS.blueTile,
+                    }}>
+                    Xem chi tiết
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </ScrollView>
       <View style={styles.book}>
@@ -329,7 +349,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   detailsContent: {
-    marginBottom: -25,
+    marginBottom: 10,
   },
   wrapDot: {
     position: 'absolute',
@@ -337,6 +357,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     zIndex: 500,
+  },
+  viewMapBtn: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: COLORS.white,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    elevation: 1,
   },
 });
 export default DetailsScreen;

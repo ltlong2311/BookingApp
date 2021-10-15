@@ -132,7 +132,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [ apiKey: API_KEY ]
     }
     splits {
         abi {

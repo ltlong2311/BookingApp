@@ -5,12 +5,15 @@ import {
   ForumStackNavigator,
   HomeStackNavigator,
   LocationStackNavigator,
+  NewsStackNavigator,
+  UserProfileStackNavigator,
 } from './StackNavigator';
 
 import LoginScreen from '../views/screens/LoginScreen';
 import ActiveScreen from '../views/screens/ActiveScreen';
 import UserProfileScreen from '../views/screens/UserProfileScreen';
 import NewsScreen from '../views/screens/NewsScreen';
+import SaveListScreen from '../views/screens/SaveListScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,8 +55,8 @@ const BottomTabNavigator = () => {
         <Tab.Screen name="Home" component={HomeStackNavigator} />
         <Tab.Screen name="Location" component={LocationStackNavigator} />
         <Tab.Screen name="Forum" component={ForumStackNavigator} />
-        <Tab.Screen name="Active" component={NewsScreen} />
-        <Tab.Screen name="User" component={UserProfileScreen} />
+        <Tab.Screen name="Active" component={NewsStackNavigator} />
+        <Tab.Screen name="User" component={UserProfileStackNavigator} />
       </Tab.Navigator>
     </>
   );
