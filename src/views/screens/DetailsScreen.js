@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Alert,
   FlatList,
   Animated,
   Dimensions,
@@ -17,7 +18,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import config from '../../../config';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {WebView} from 'react-native-webview';
 import AsyncStore from '@react-native-async-storage/async-storage';
 
 const {width, height} = Dimensions.get('screen');
@@ -39,8 +39,11 @@ function convertHTMLEntity(text) {
 
 const DetailsScreen = ({navigation, route}) => {
   const hotel = route.params;
-  console.log(route.params);
+  // console.log(route.params);
   const [dataList, setDataList] = useState(hotel.image.slice(0, 4));
+  const [hotelList, setHotelList] = useState();
+  const [colorStatusBar, setColorStatusBar] = useState('transparent');
+
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
   const ref = useRef(null);
@@ -48,7 +51,13 @@ const DetailsScreen = ({navigation, route}) => {
   useEffect(() => {
     setDataList(dataList);
     infiniteScroll(dataList);
+    getValue('hotelSaveList');
   }, []);
+
+  const alert = text =>
+    Alert.alert('Thông báo', text, [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
 
   const infiniteScroll = dataList => {
     const numberOfData = dataList.length;
@@ -65,12 +74,56 @@ const DetailsScreen = ({navigation, route}) => {
       ref?.current?.scrollToOffset({offset: scrollValue, animated: true});
     }, 5000);
   };
+  const getValue = async key => {
+    const result = await AsyncStore.getItem(key);
+    setHotelList(JSON.parse(result));
+  };
+  const saveData = async (key, value) => {
+    await AsyncStore.setItem(key, value);
+  };
+
+  const isChangeColorStatusBar = e => {
+    const contentOffsetY = e.nativeEvent.contentOffset.y;
+    // console.log(contentOffsetY);
+    if (contentOffsetY > 55) {
+      setColorStatusBar(COLORS.blueChambray);
+    } else {
+      setColorStatusBar('transparent');
+    }
+  };
+
+  const saveHotel = () => {
+    const hotelItem = {
+      MaKS: hotel.MaKS,
+      tenKS: hotel.tenKS,
+      rating: hotel.rating,
+      tenMien: hotel.tenMien,
+      diaDiem: hotel.location.tenDD,
+    };
+    const listID = [];
+    for (const element of hotelList) {
+      listID.push(element.ID); // [ID,...]
+    }
+    if (!listID.includes(hotel.MaKS)) {
+      hotelList.push(hotelItem);
+      saveData('hotelSaveList', JSON.stringify(hotelList));
+      alert('Lưu thành công');
+    } else {
+      alert('Đã có trong danh sách lưu');
+    }
+    console.log(hotelList);
+  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <StatusBar style="light" translucent backgroundColor="transparent" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={colorStatusBar}
+        animated={true}
+      />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
+        onScroll={isChangeColorStatusBar}
         showsVerticalScrollIndicator={false}>
         <View style={{height: height / 2.5}}>
           {hotel.image && hotel.image.length && (
@@ -164,8 +217,15 @@ const DetailsScreen = ({navigation, route}) => {
         </View>
         <View style={styles.detailsHotel}>
           <View style={styles.iconSave}>
-            <MaterialIcons name="bookmarks" color={COLORS.blueTile} size={30} />
+            <TouchableOpacity activeOpacity={0.8} onPress={saveHotel}>
+              <MaterialIcons
+                name="bookmarks"
+                color={COLORS.blueTile}
+                size={30}
+              />
+            </TouchableOpacity>
           </View>
+
           <View
             style={{
               flexDirection: 'row',
@@ -179,7 +239,7 @@ const DetailsScreen = ({navigation, route}) => {
                 fontSize: 16,
                 fontWeight: 'bold',
                 color: COLORS.primary,
-                width: '80%',
+                width: '75%',
               }}>
               {hotel.diaChi}
             </Text>
@@ -211,18 +271,35 @@ const DetailsScreen = ({navigation, route}) => {
             Vị trí
           </Text>
           <View>
-            <MapView
-              provider={PROVIDER_GOOGLE}
-              style={{height: 150}}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            />
+            {hotel.locationMap ? (
+              <MapView
+                style={{height: 150}}
+                showsUserLocation={true}
+                region={{
+                  latitude: hotel.locationMap.latitude,
+                  longitude: hotel.locationMap.longitude,
+                  latitudeDelta: 0.08,
+                  longitudeDelta: 0.09,
+                }}
+              />
+            ) : (
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                style={{height: 150}}
+                initialRegion={{
+                  latitude: 21.046738397887,
+                  longitude: 105.84678914075619,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+              />
+            )}
+
             <View style={styles.viewMapBtn}>
-              <TouchableOpacity onPress={()=> navigation.push('ViewHotelLocationScreen', hotel)}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.push('ViewHotelLocationScreen', hotel)
+                }>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <MaterialIcons
                     name="place"

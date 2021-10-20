@@ -10,6 +10,8 @@ import UserProfileScreen from '../views/screens/UserProfileScreen';
 import SaveListScreen from '../views/screens/SaveListScreen';
 import NewsScreen from '../views/screens/NewsScreen';
 import NewsDetailScreen from '../views/screens/NewsDetailsScreen';
+import BookingListScreen from '../views/screens/BookingListScreen';
+import BookingDetailScreen from '../views/screens/BookingDetailsScreen';
 const Stack = createStackNavigator();
 const screenOptionStyle = {
   headerShown: false,
@@ -55,6 +57,8 @@ const UserProfileStackNavigator = () => {
       <Stack.Screen name="UserProfile" component={UserProfileScreen} />
       <Stack.Screen name="UserProfileEdit" component={UserProfileEditScreen} />
       <Stack.Screen name="SaveList" component={SaveListScreen} />
+      <Stack.Screen name="BookingList" component={BookingListScreen} />
+      <Stack.Screen name="BookingDetail" component={BookingDetailScreen} />
     </Stack.Navigator>
   );
 };

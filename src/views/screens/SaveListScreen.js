@@ -6,15 +6,29 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {DrawerActions} from '@react-navigation/native';
+import SearchCard from '../../components/Hotel/SearchCard';
+import AsyncStore from '@react-native-async-storage/async-storage';
+import SaveCard from '../../components/Hotel/SaveCard';
 
 const {width, height} = Dimensions.get('screen');
 
 const SaveListScreen = ({navigation}) => {
+  const [hotelList, setHotelList] = useState([]);
+
+  useEffect(() => {
+    getValue('hotelSaveList');
+  }, []);
+  const getValue = async key => {
+    const result = await AsyncStore.getItem(key);
+    setHotelList(JSON.parse(result));
+  };
   return (
     <SafeAreaView style={styles.background}>
       <LinearGradient
@@ -29,15 +43,32 @@ const SaveListScreen = ({navigation}) => {
           color={COLORS.white}
         />
         <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
-          Danh sách lưu trữ
+          Khách sạn đã lưu
         </Text>
-        <MaterialIcons
-          name="notifications-none"
-          size={28}
+        <MaterialCommunityIcons
+          onPress={() => navigation.navigate('SearchHotelScreen')}
+          name="domain-plus"
+          size={25}
           color={COLORS.white}
         />
       </LinearGradient>
       <View style={styles.slider}>
+        <View>
+          <FlatList
+            contentContainerStyle={{
+              paddingHorizontal: 15,
+              paddingBottom: 10,
+            }}
+            showsVerticalScrollIndicator={false}
+            maxToRenderPerBatch={3}
+            scrollEnabled
+            data={hotelList}
+            keyExtractor={() => Math.random().toString(36).substr(2, 9)}
+            renderItem={({item}) => (
+              <SaveCard hotel={item} navigation={navigation} />
+            )}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );

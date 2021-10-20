@@ -16,7 +16,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import userAPI from '../../API/userAPI';
 import roomAPI from '../../API/roomAPI';
 
-
 const {width, height} = Dimensions.get('screen');
 
 const BookingConfirmScreen = ({navigation, route}) => {
@@ -52,8 +51,9 @@ const BookingConfirmScreen = ({navigation, route}) => {
     try {
       const res = await roomAPI.bookRoom(formData, route.params.token);
       if (res.status === 'success') {
-        console.log("Success", res.data);
-        navigation.navigate('BookingSuccessScreen');
+        // console.log("Success", res.data);
+        const QRcodeBooking = res.data.qrcode;
+        navigation.navigate('BookingSuccessScreen', QRcodeBooking);
         setIsLoading(false);
       }
       console.log(res);

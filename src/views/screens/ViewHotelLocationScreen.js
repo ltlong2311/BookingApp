@@ -12,14 +12,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import {WebView} from 'react-native-webview';
 import LinearGradient from 'react-native-linear-gradient';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import CardInMap from '../../components/Hotel/CardInMap';
 
 const {width, height} = Dimensions.get('screen');
 
 const ViewHotelLocationScreen = ({navigation, route}) => {
   const hotel = route.params;
-  const [isShowHotel, setIsShowHotel] = useState(true);
+  const [isShowHotel, setIsShowHotel] = useState(false);
 
   const changeShowHotel = () => {
     setIsShowHotel(!isShowHotel);
@@ -42,16 +42,48 @@ const ViewHotelLocationScreen = ({navigation, route}) => {
         </Text>
       </LinearGradient>
       <View style={styles.slider}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={{height: '100%'}}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        />
+        {hotel.locationMap ? (
+          <MapView
+            style={{width: width, height: '100%'}}
+            showsUserLocation={true}
+            region={{
+              latitude: hotel.locationMap.latitude,
+              longitude: hotel.locationMap.longitude,
+              latitudeDelta: 0,
+              longitudeDelta: 0.004,
+            }}>
+            <Marker
+              onPress={() => setIsShowHotel(true)}
+              coordinate={hotel.locationMap}
+              pinColor={COLORS.monza}
+              title={hotel.tenKS}
+              description={hotel.diaChi}></Marker>
+          </MapView>
+        ) : (
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={{height: '100%'}}
+            initialRegion={{
+              latitude: 21.027109138156423,
+              longitude: 105.86162161040744,
+              latitudeDelta: 0.003,
+              longitudeDelta: 0.004,
+            }}>
+            <Marker
+              onPress={() => setIsShowHotel(true)}
+              coordinate={{
+                latitude: 21.027109138156423,
+                longitude: 105.86162161040744,
+              }}
+              pinColor={COLORS.monza}
+              title={hotel.tenKS}
+              description={hotel.diaChi}>
+              {/* <Callout>
+                <CardInMap hotel={hotel} navigation={navigation} />
+              </Callout> */}
+            </Marker>
+          </MapView>
+        )}
         <View
           style={{
             position: 'absolute',

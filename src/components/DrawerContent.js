@@ -23,6 +23,7 @@ import jwt_decode from 'jwt-decode';
 import {set} from 'react-native-reanimated';
 import COLORS from '../consts/colors';
 import LinearGradient from 'react-native-linear-gradient';
+import userAPI from '../API/userAPI';
 
 async function removeDataStore(key) {
   await AsyncStore.removeItem(key);
@@ -31,9 +32,11 @@ async function removeDataStore(key) {
 export const DrawerContent = props => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [userInfo, setUserInfo] = useState();
+  const [idUser, setIDUser] = useState();
 
   useEffect(() => {
     getValue();
+    // idUser && getUserInfo();
   }, []);
 
   const toggleTheme = () => {
@@ -43,18 +46,29 @@ export const DrawerContent = props => {
   const logOut = () => {
     removeDataStore('userToken');
     removeDataStore('userID');
+    removeDataStore('hotelSaveList');
     props.navigation.push('Login');
   };
 
+  // const getUserInfo = async () => {
+  //   try {
+  //     const res = await userAPI.getOne(idUser);
+  //     setUserInfo(res.data);
+  //   } catch (error) {
+  //     console.log('Error API User', error);
+  //   }
+  // };
+
   const getValue = async () => {
     let token = await AsyncStore.getItem('userToken');
-    token && setUserInfo(jwt_decode(token));
+    // const userProfile = jwt_decode(token);
+    setUserInfo(jwt_decode(token));
     // console.log(token);
-    // console.log(userInfo);
+    // console.log(userProfile);
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={isDarkTheme ? styles.drawerDark : styles.drawer}>
       <View style={styles.drawerContent}>
         {userInfo ? (
           <ImageBackground
@@ -125,17 +139,17 @@ export const DrawerContent = props => {
               props.navigation.navigate('HomeScreen');
             }}
           />
-           <DrawerItem
+          <DrawerItem
             icon={({color, size}) => (
               <MaterialCommunityIcons
-                name="home-outline"
+                name="bookmark-multiple-outline"
                 color={color}
                 size={size}
               />
             )}
             label="Đã lưu"
             onPress={() => {
-              props.navigation.navigate('User', { screen: 'SaveList' });
+              props.navigation.navigate('User', {screen: 'SaveList'});
             }}
           />
           <DrawerItem
@@ -189,7 +203,7 @@ export const DrawerContent = props => {
             )}
             label="Tài khoản"
             onPress={() => {
-              props.navigation.navigate('User');
+              props.navigation.navigate('User', {screen: 'UserProfile'});
             }}
           />
           <DrawerItem
@@ -243,6 +257,14 @@ export const DrawerContent = props => {
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
+  },
+  drawer: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
+  drawerDark: {
+    flex: 1,
+    backgroundColor: COLORS.darkTile,
   },
   userInfoSection: {
     height: 130,

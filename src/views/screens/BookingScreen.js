@@ -162,7 +162,7 @@ const BookingScreen = ({navigation, route}) => {
   // console.log(typeof startDate, startDate);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View>
+       <SafeAreaView style={{flex: 1}}>
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
@@ -194,11 +194,11 @@ const BookingScreen = ({navigation, route}) => {
             </View>
           </View>
         </LinearGradient>
-        <View>
+      <SafeAreaView style={{flex: 1}}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{paddingBottom: 150}}
-            style={{height: height - 70}}>
+            contentContainerStyle={{paddingBottom: 50}}
+            >
             <View style={styles.datePickerCard}>
               <View style={{alignItems: 'center'}}>
                 <Text style={styles.textTittle}>Ngày nhận</Text>
@@ -218,8 +218,8 @@ const BookingScreen = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
-
-            {rooms.map((room, index) => (
+            <SafeAreaView style={{flexGrow: 1}}>
+            {rooms && rooms.map((room, index) => (
               <RoomCard
                 key={index}
                 navigation={navigation}
@@ -229,9 +229,10 @@ const BookingScreen = ({navigation, route}) => {
                 selectRoom={selectRoom}
               />
             ))}
+            </SafeAreaView>
           </ScrollView>
-        </View>
-      </View>
+        </SafeAreaView>
+         </SafeAreaView>
 
       {showBookingSubmitBtn && (
         <View style={styles.bookingCard}>

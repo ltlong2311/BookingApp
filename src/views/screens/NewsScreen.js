@@ -75,7 +75,6 @@ const NewsScreen = ({navigation}) => {
       {news && news.length && (
         <SafeAreaView style={styles.sections}>
           <SectionList
-
             contentContainerStyle={{flexGrow: 1}}
             keyExtractor={() => Math.random().toString(36).substr(2, 9)}
             stickySectionHeadersEnabled={false}

@@ -41,7 +41,7 @@ const NewsDetailScreen = ({navigation, route}) => {
             : ''}
         </Text>
       </LinearGradient>
-      <SafeAreaView>
+      <ScrollView>
         <View style={{paddingHorizontal: 15, paddingVertical: 10}}>
           <Text
             style={{
@@ -80,25 +80,25 @@ const NewsDetailScreen = ({navigation, route}) => {
         </View>
         <ImageBackground
           style={{width: width, height: 200}}
-          source={{uri: news.image}}
+          source={{uri: news.imageDetails}}
         />
         <View style={{paddingHorizontal: 15, paddingVertical: 10}}>
           {news.content.split('\n').map((text, index) => (
-            <Text
-              key={index}
-              style={{
-                color: COLORS.darkText,
-                fontSize: 15,
-                fontWeight: '500',
-                marginTop: 10,
-                // textAlign: "justify",
-                lineHeight: 23,
-              }}>
-              {text}
-            </Text>
+              <Text
+                key={index}
+                style={{
+                  color: COLORS.darkText,
+                  fontSize: 15,
+                  fontWeight: '500',
+                  marginTop: 10,
+                  // textAlign: "justify",
+                  lineHeight: 23,
+                }}>
+                {text}
+              </Text>
           ))}
         </View>
-      </SafeAreaView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

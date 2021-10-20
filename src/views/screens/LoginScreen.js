@@ -41,9 +41,10 @@ const LoginScreen = ({navigation}) => {
   const getValue = async key => {
     let result = await AsyncStore.getItem(key);
     if (result) {
-      console.log("Here's value: \n" + result);
+      console.log("Value: \n" + result);
+      console.log( typeof result);
     } else {
-      console.log('No values stored under that key.');
+      console.log('No values');
     }
   };
 
@@ -64,6 +65,9 @@ const LoginScreen = ({navigation}) => {
           const userID = userInfo.ID.toString();
           saveData('userID', userID);
           setIsLoading(false);
+          var hotelList = [];
+          saveData('hotelSaveList',JSON.stringify(hotelList));
+          // getValue('hotelSaveList');
           navigation.push('Home');
         }
       }

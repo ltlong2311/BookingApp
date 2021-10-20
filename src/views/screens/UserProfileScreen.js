@@ -141,26 +141,42 @@ const UserProfileScreen = ({navigation}) => {
                       <Text style={styles.content}>Quản lý tài khoản</Text>
                     </View>
                   </TouchableOpacity>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      paddingBottom: 20,
-                    }}>
-                    <MaterialCommunityIcons
-                      size={25}
-                      name="bookmark-multiple-outline"
-                    />
-                    <Text style={styles.content}>Đã lưu</Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <MaterialCommunityIcons size={25} name="account-outline" />
-                    <Text style={styles.content}>Danh sách đặt trước</Text>
-                  </View>
+                  <TouchableOpacity
+                    actionOpacity={0.8}
+                    onPress={() =>
+                      navigation.push('SaveList', {
+                        token: userToken,
+                        userProfile: userInfo,
+                      })
+                    }>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingBottom: 20,
+                      }}>
+                      <MaterialCommunityIcons
+                        size={25}
+                        name="bookmark-multiple-outline"
+                      />
+                      <Text style={styles.content}>Đã lưu</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    actionOpacity={0.8}
+                    onPress={() => navigation.push('BookingList', userToken)}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <MaterialCommunityIcons
+                        size={25}
+                        name="account-outline"
+                      />
+                      <Text style={styles.content}>Danh sách đặt trước</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </>
             )}

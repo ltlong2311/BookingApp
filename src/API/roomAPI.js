@@ -11,6 +11,14 @@ class RoomAPI {
       },
     });
   };
+  getListBooking = token => {
+    const url = '/orders';
+    return axiosClient.get(url, {
+      headers: {
+        token: token,
+      },
+    });
+  };
 }
 const roomAPI = new RoomAPI();
 export default roomAPI;

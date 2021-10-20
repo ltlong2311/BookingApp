@@ -36,7 +36,7 @@ const HotNewsCard = ({news, navigation}) => {
             <Text
               style={[
                 {
-                  color: COLORS.dark,
+                  color: COLORS.darkBlue,
                   fontWeight: 'bold',
                   fontSize: 20,
                   overflow: 'hidden',

@@ -31,6 +31,7 @@ import BookingScreen from './src/views/screens/BookingScreen';
 import NewsScreen from './src/views/screens/NewsScreen';
 import ViewHotelLocationScreen from './src/views/screens/ViewHotelLocationScreen';
 import BookingSuccessScreen from './src/views/screens/BookingSuccessScreen';
+import BookingListScreen from './src/views/screens/BookingListScreen';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,7 @@ const App = () => {
         <Stack.Screen name="BookingScreen" component={BookingScreen} />
         <Stack.Screen name="BookingConfirmScreen" component={BookingConfirmScreen} />
         <Stack.Screen name="BookingSuccessScreen" component={BookingSuccessScreen} />
+        <Stack.Screen name="BookingListScreen" component={BookingListScreen} />
         <Stack.Screen name="NewsScreen" component={NewsScreen} />
         <Stack.Screen name="PostDetails" component={PostDetails} />
         <Stack.Screen name="Login" component={LoginScreen} />

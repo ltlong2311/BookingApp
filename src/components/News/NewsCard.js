@@ -34,7 +34,7 @@ const NewsCard = ({news, navigation}) => {
             }}>
             <Text
               style={{
-                color: COLORS.dark,
+                color: COLORS.darkBlue,
                 fontWeight: 'bold',
                 fontSize: 16,
                 paddingBottom: 5,
@@ -45,7 +45,7 @@ const NewsCard = ({news, navigation}) => {
           </View>
           <Text
             style={{
-              color: COLORS.dark,
+              color: COLORS.darkGea,
               fontSize: 14,
               overflow: 'hidden',
             }}>
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardImage: {
-    width: width / 3,
+    width: width / 3 - 12,
     height: 120,
   },
   infoCard: {
     width: (width * 2) / 3,
     backgroundColor: COLORS.white,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 12,
   },
   overlay: {
