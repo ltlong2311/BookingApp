@@ -1,3 +1,3 @@
 # BookingApp
 
-Video demo: https://youtu.be/7KVF7mpdP6s
+Video demo: https://youtu.be/IYj5AfxfH1A
